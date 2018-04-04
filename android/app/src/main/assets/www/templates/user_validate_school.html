@@ -1,0 +1,32 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="me_addValidate_wrap" scroll="false">
+        <div class="goBack">
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1>学号找回密码(1/3)</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 95%; margin-top: 0px;">
+            <div class="con">
+                <form name="ValidatesForm">
+                    <div class="formWrap verify">
+                        <label class="item-input texts" ng-click="schoolList()">
+                            <span class="input-label input-sp icon-school input-icon"></span>
+                            <input readonly="readonly" type="text" placeholder="请选择您的学校" ng-model="schoolName" >
+                            <b class="fl_right ion-chevron-right"></b>
+                        </label>
+                        <label class="item-input texts">
+                            <span class="input-label input-sp icon-number input-icon" style="font-family: 'gxbadd';font-size:26px;"></span>
+                            <input type="text" name="schoolNo" placeholder="请填写你在本校的学号" ng-model="$addValidateModel.no">
+                        </label>
+                        <label class="item-input texts">
+                            <span class="input-label input-sp icon-userName input-icon"></span>
+                            <input type="text" name="name" placeholder="请输入你的真实姓名" ng-model="$addValidateModel.name">
+                        </label>
+                    </div>
+                    <button ng-if="!schoolName  || !$addValidateModel.no || !$addValidateModel.name" class="verify_submit" type="submit" style="width: 100%;">下一步</button>
+                    <button ng-if="schoolName && $addValidateModel.no && $addValidateModel.name" class="verify_sub" type="submit" ng-click="nextStep()" style="width: 100%;">下一步</button>
+                </form>
+            </div>
+        </ion-scroll>
+
+    </ion-content>
+</ion-view>

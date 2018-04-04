@@ -1,0 +1,29 @@
+<ion-view hide-nav-bar="true">
+
+    <!--<ion-nav-buttons>-->
+        <!--<span class="icon_bar_back backs"></span>-->
+        <!--<span class="title" style="display: none"><i class="ion-android-checkbox-blank topic-ion-outline"></i>只看错题</span>-->
+        <!--<span class="button button-clear" style="display: none"><i class="icon_bar_number topic-icon-outline keys-ion-outline"></i>1/2</span>-->
+    <!--</ion-nav-buttons>-->
+
+    <ion-content class="keys_wrap">
+
+        <div class="{{navBarStyle}}">
+            <span class="icon_bar_back lefts" ng-click="goTome()"></span>
+        </div>
+
+        <ul>
+
+            <li class="fl_left"  ng-repeat="s in submission" ng-click="goTopic($index)">
+
+                <span ng-if="currentIndex != ($index+1)" class="{{s.text.length!=0 ? 'end':'' }}">{{$index+1}}</span>
+
+                <span ng-if="currentIndex == ($index+1)" class="when">{{$index+1}}</span>
+
+            </li>
+
+
+        </ul>
+        <button class="keys_btn" ng-click="onSubmit()" style="display: none">提交作答</button>
+    </ion-content>
+</ion-view>

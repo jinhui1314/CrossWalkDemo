@@ -1,0 +1,56 @@
+
+<ion-view hide-nav-bar="true" id="videoView">
+  <!--<ion-nav-buttons>-->
+    <!--<button class="button button-clear ion-ios-arrow-back set-font" >-->
+    <!--</button>-->
+    <!--&lt;!&ndash;<a class="swiper-button-black"></a>&ndash;&gt;-->
+    <!--<h2 class="title">视频名称</h2>-->
+    <!--&lt;!&ndash;<a class="button"></a>&ndash;&gt;-->
+    <!--<button class="button ion-android-menu set-font" ng-click="showChapterList()">-->
+    <!--</button>-->
+  <!--</ion-nav-buttons>-->
+  <ion-content scroll="false" class="video-wrapper">
+    <div id="videoPlayer"></div>
+    <!--<script id="chapterList.html" type="text/ng-template">-->
+      <div class="modal video_container">
+        <!--<ion-header-bar class="bar-header" style="background:rgba(0,0,0,.8);border-bottom:0 none;">-->
+          <!--<h1 class="title" style="display: none"></h1>-->
+          <!--<div class="buttons playlist-close-btn" ng-click="closeList()">-->
+            <!--<span class="ion-close-round"></span>-->
+          <!--</div>-->
+        <!--</ion-header-bar>-->
+
+        <ion-content class="course_detail_wrap video_wrap">
+          <div class="playlist-btn-wrapper">
+            <div class="buttons playlist-close-btn" ng-click="closeList()">
+              <span class="ion-close-round"></span>
+            </div>
+          </div>
+          <ul class="navigation">
+            <li class="chapters" ng-repeat="unit in units1">
+              <div class="chapter" ng-click="unit.openStatus=!unit.openStatus">
+                <p class="fl_left">{{unit.title}}</p>
+                <i class="open fl_right"
+                   ng-class="unit.openStatus==0?'ion-chevron-down':'ion-chevron-up'"></i>
+              </div>
+              <ul class="section" ng-hide="unit.openStatus==0">
+                <li ng-repeat="item in unit.itemList">
+                  <p class="section">{{item.title}}</p>
+                  <ul class="section-list">
+                    <li ng-repeat="chapter in item.chapterList" ng-click="goChapter(chapter.chapterId)">
+                      <span class="fl_left triangle" ng-class="chapter.learnStatus=='2'?'finished':''">
+                        <span class="icon-video" ng-if="chapter.contentType=='Video'"></span>
+                      </span>
+                      <p class="text fl_left" ng-class="chapter.chapterId==currentChaptet?'active':''">{{chapter.title}}</p>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+
+        </ion-content>
+      </div>
+<!--</script> -->
+  </ion-content>
+</ion-view>

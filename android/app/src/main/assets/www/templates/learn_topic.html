@@ -1,0 +1,39 @@
+<ion-view hide-nav-bar="true">
+
+    <ion-content class="learn_topic_wrap" style="height:100%" scroll="false">
+
+        <div class="maskStatus" ng-show="max" ng-click="setMax()"><img src="./images/mode.png" alt=""/></div>
+        <ion-slide-box show-pager="false" delegate-handle="myhandle" on-slide-changed="slideChange($index)" style="height:100%;" >
+            <ion-slide ng-repeat="question in quiz.quizQuestionList ">
+                <div class="{{navBarStyle}}" ng-if="$index == (currentIndex-1)">
+                    <span class="icon_bar_back lefts" ng-click="goTome()"></span>
+                    <span class="rights key icon_bar_number topic-icon-outline" ng-click="goKeys()">{{loadMailLimitTo}} {{currentIndex}}/{{quiz.quizQuestionList.length}}</span>
+                </div>
+                <ion-scroll style="width: 100%;height: 100%;" ng-if="$index == (currentIndex-1)" scrollbar-y="true">
+                    <div>
+                        <div class="subject" ng-bind-html="renderHtml(handleImgUrl(question.questionName))"></div>
+                        <div class="con" style="margin-bottom:30px;">
+                            <div class="answer" ng-if="question.questionType=='multiple_answers'" style="height:auto">
+                                <dl ng-repeat="answer in question.answerList"  ng-click="doAnwser(question.questionId,answer.answerId,'single_choice')">
+                                    <dt class="fl_left {{doChoise(question.questionId,answer.answerId)}}"  ng-bind-html="getLetter($index)"></dt>
+                                    <dd class="fl_left" ng-bind-html="renderHtml(handleImgUrl(answer.text))"></dd>
+                                </dl>
+                            </div>
+                            <div class="radio" ng-if="question.questionType!='multiple_answers'">
+                                <dl ng-repeat="answer in question.answerList" ng-click="doAnwser(question.questionId,answer.answerId,'multiple_choice')">
+                                    <dt class="fl_left {{doChoise(question.questionId,answer.answerId)}}"  ng-bind-html="getLetter($index)" ></dt>
+                                    <dd class="fl_left" ng-bind-html="renderHtml(handleImgUrl(answer.text))"></dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="$index==(quiz.quizQuestionList.length-1)" style="padding-top:20px;height: 200px">
+                        <p class="prompt" style="text-align:center;">已经是最后一道题了</p>
+                        <button class="sub_answer" ng-click="doSubmit()">提交作答</button>
+                    </div>
+                </ion-scroll>
+
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+</ion-view>

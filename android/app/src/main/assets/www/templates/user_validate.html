@@ -1,0 +1,30 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false">
+        <div class="goBack">
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1>绑定手机</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;">
+            <div class="user_receive_wrap">
+                <div class="headers">
+                    <p>短信验证码已发送至 <span>{{mobile}}</span></p>
+                    <p class="obtain" ><span ng-bind-html="paracont"></span><span ng-click="goAgainGetCode()" ng-if="paraclass=='but_null'">&nbsp;<a href="#">重新发送</a></span></p>
+                </div>
+
+                <div class="bindForget_wrap">
+                    <form name="validateForm" novalidate ng-submit="goToBinding()">
+                        <div class="formWrap tabulation">
+                            <label class="item-input texts">
+                                <span class="input-label input-sp">验证码</span>
+                                <input type="text" name="validateCode" placeholder="请输入您收到的验证码" ng-model="$bindingModel.validateCode" required>
+                                <!--<span class="error" ng-show="validateForm.validateCode.$error.required" >不可为空</span>-->
+                            </label>
+                        </div>
+                        <button class="next_step" type="submit" >提交</button>
+                    </form>
+                </div>
+            </div>
+        </ion-scroll>
+
+    </ion-content>
+</ion-view>

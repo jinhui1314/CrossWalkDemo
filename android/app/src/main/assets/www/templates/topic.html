@@ -1,0 +1,119 @@
+<ion-view hide-nav-bar="true">
+    <div class="popup-view">
+        <img ng-src="{{microImgSrc? microImgSrc :'../www/images/microphone1.png'}}">
+    </div>
+
+    <ion-content scroll="false" class="topic_detail_wrap">
+        <div class="goBack" style="position: fixed;top:0;z-index:999;">
+            <span class="icon_bar_back backs" ng-click="goBack()"></span>
+            <h1>讨论详情</h1>
+        </div>
+        <ion-scroll class="{{topicDetailScroll}} scroll-view scroll-y"  style="width:100%;display:block;" ng-class="scoreTopic?'myTopicScrolls':'myTopicScroll'" delegate-handle="topicScroll" on-scroll="scrollHandle()"  >
+
+            <div class="{{scrollStyle}}">
+                <p class="deadlines" ng-if="show == 2">本讨论开始时间为{{topicDetail.unlockAt}}<span class="fl_right" ng-click="rule()" >查看规则</span></p>
+                <p class="deadlines" ng-if="show==1">本讨论已截止，截止后的回复无法得分<span class="fl_right" ng-click="rule()" >查看规则</span></p>
+                <p class="deadlines" ng-if="show==0">{{topicDetail.dueAt}}前参与讨论可以得分<span class="fl_right" ng-click="rule()">查看规则</span></p>
+            </div>
+            <ul class="topic-wrapper" style="border-bottom: 1px solid #e4e9ea;margin-bottom: 10px;">
+                <li>
+                    <div class="topicCard">
+                        <div class="topicTitle"><span ng-if="type == 1">得分</span>{{topicDetail.title}}</div>
+                        <div class="topicSummary" ng-bind-html="topicDetail.body"></div>
+                        <div class="topic-others">
+                            <div class="topic-author">
+                                <i ng-class="topicDetail.userName?'topic_name':''">{{topicDetail.userName}}</i>
+                                <span ng-if="topicDetail.userType!='StudentEnrollment'" class="teacher topic_tea">老师</span>
+                            </div>
+                            <div class="topic-reply">
+                                <span class="time">{{topicDetail.createdAt}}</span>
+                                <span class="icons-topic detail_topic">{{topicDetail.postsCount || 0}}人回复</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="myReply_wrap" ng-if="myScoreTopic">
+                <div ng-if="myReply == 0">
+                    <div class="tit_wrap">
+                        <p class="tit fl_left">我的回复</p>
+                        <span ng-if="show == 1" class="fl_right">0.0分<i class="more" ng-click="showRemark()"><i class="ion-ios-more"></i></i></span>
+                    </div>
+                    <p ng-if="show==1" class="noReply">回复已截止，你仍可回复，但不能得分</p>
+                    <p ng-if="show==0" class="noReply">你还没有参与讨论，快来说点什么吧</p>
+                </div>
+
+                <div class="reply_card" ng-if="myReply == 1" style="padding:0;border:0;">
+                    <div class="myReply_tit">
+                        <span class="fl_left">我的回复</span>
+                        <span>({{topicReply.postTime}} 已参与)</span>
+                        <span class="fl_right" ng-if="showScore == 0 && show !=0">成绩待公布</span>
+                        <span ng-if="show == 0" class="fl_right" ng-click="editAlert()">重新编辑</span>
+                        <span ng-if="showScore == 1 && show !=0" class="fl_right">{{scroe}}分<i class="more" ng-click="showRemark()"><i class="ion-ios-more"></i></i></span>
+                        <span ng-if="showScore == 2 && show !=0" class="fl_right">0.0分<i class="more" ng-click="showRemark()"><i class="ion-ios-more"></i></i></span>
+                    </div>
+                    <div class="card_content myReply_content">
+                        <div class="audio-wrap-margin">
+                            <div ng-if="topicReply.postAttachmentVoList[0].type=='Audio'" class="audio-wrap {{{true:'green',false:'grey'}[0 == thatPlay]}}"  ng-click="a=0;showMyPlay(a,topicReply.postAttachmentVoList[0].url,topicReply.postAttachmentVoList[0].seconds);" >
+                                <img ng-src="{{{true:arrImgSrc,false:'../www/images/voice.png'}[0 == thatPlay]}}">
+                                <audio class="audioPlays" id="myAudioPlayer" autoplay="autoplay" ng-src="{{{true:auto_src,false:''}[0 == thatPlay]}}"></audio>
+                                <span style="color: {{{true:'#fff',false:'#6e7880'}[0 == thatPlay]}}">{{{true:'播放中',false:(topicReply.postAttachmentVoList[0].seconds)+'s'}[0 == thatPlay]}}</span>
+                            </div>
+                            <div ng-if="topicReply.attachmentIsExist=='0'" class="myTextView intro-detail" ng-class="isOpen1=='0'?'':'open'" ng-bind-html="topicReply.message"></div>
+                        </div>
+
+                    </div>
+                    <div class="myReply_foot">
+                        <button ng-show="showes" class="no-bg-btn" ng-click="open1()" ng-bind="text1"></button>
+                        <i ng-show="showes" ng-class="isOpen1 == '0'?'ion-ios-arrow-down':'ion-ios-arrow-up'"></i>
+                    </div>
+                </div>
+
+            </div>
+            <div class="reply" ng-if="tab == 1">
+                <div class="new_answer">全部回复 <span>(共{{topicDetail.postsCount}}条)</span></div>
+                <div class="reply_card_wrap">
+                    <div class="reply_card topic_card" ng-repeat="reply in replyList">
+                        <div class="card_title">
+                            <i ng-if="reply.userAvatar_url==''||reply.userAvatar_url==null"><em class="icon-me-def"></em></i>
+                            <img src="{{reply.userAvatar_url}}" alt="" class="fl_left" onerror="javascript:this.src=gxb.settings.cdn.defaultAvatar.getPaths()" ng-if="reply.userAvatar_url"/>
+                            <span class="fl_left name">{{reply.userName}}</span>
+                        </div>
+                        <div class="card_content">
+                            <div class="audio-wrap-margin">
+                                <div style="margin-top:30px;" ng-if="reply.postAttachmentVoList[0].type=='Audio'" class="audio-wrap {{{true:'green',false:'grey'}[$index == thisPlay]}}"  ng-click="showPlay($index,reply.postAttachmentVoList[0].url,reply.postAttachmentVoList[0].seconds);" >
+                                    <img ng-src="{{{true:arrImgSrc,false:'../www/images/voice.png'}[$index == thisPlay]}}">
+                                    <audio class="audioPlays" id="audioPlayer{{$index}}" autoplay="autoplay" ng-src="{{{true:auto_src,false:''}[$index == thisPlay]}}"></audio>
+                                    <span style="color: {{{true:'#fff',false:'#6e7880'}[$index == thisPlay]}}">{{{true:'播放中',false:(reply.postAttachmentVoList[0].seconds)+'s'}[$index == thisPlay]}}</span>
+                                </div>
+                                <div ng-if="reply.attachmentIsExist=='0'" class="textView text_view" ng-click="goreplyDetail(reply.postId,reply.message,reply.createdAt,reply.userName,reply.userAvatar_url,reply.postsCount,reply.voteUpCount,reply.voteLog)" ng-bind-html="reply.message"></div>
+                            </div>
+
+
+                        </div>
+                        <div class="card_foot topic_foot">
+                            <span ng-click="goreplyDetail(reply.postId,reply.message,reply.createdAt,reply.userName,reply.userAvatar_url,reply.postsCount,reply.voteUpCount,reply.voteLog)" class="fl_left message topic_mess">{{reply.postsCount || 0}}人评论</span>
+                            <p class="fl_right times">{{reply.postTime}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="noMore">没有更多了...</div>
+                <loading ng-show="hasMoreReply"></loading>
+            </div>
+            <div class="no_reply" ng-if="tab == 0">还没有人回复，说点什么吧</div>
+
+            <network ng-if="networkStates == 'none'"></network>
+        </ion-scroll>
+
+        <ion-footer-bar keyboard-attach class="bar-assertive" ng-if="!myScoreTopic || !scoreTopic">
+            <div class="reply_wrap">
+                <div class="reply_btn">
+                    <textarea ng-if="myScoreTopic" ng-model="reply.message" required id="replyText"  ng-show="sondsStuta==1 " min-length="20" ng-click="replyTopic()"  ng-keyup="MaxMe()" class="inputText" placeholder="回复不能少于20字"></textarea>
+                    <textarea ng-if="!myScoreTopic" ng-model="reply.message" required id="replyText"  ng-show="sondsStuta==1 " ng-click="replyTopic()"  ng-keyup="MaxMe()" class="inputText" placeholder="回复讨论"></textarea>
+                    <i class="deleteBtn" ng-if="!reply.message" ng-click="replyTopic();submitReply(topicDetail.topicId,topicReply.postId)" ng-show="sondsStuta==1 "><span></span></i>
+                    <i class="sendInput" ng-if="reply.message" ng-click="replyTopic();submitReply(topicDetail.topicId,topicReply.postId)" ng-show="sondsStuta==1 "><span></span></i>
+                </div>
+            </div>
+        </ion-footer-bar>
+    </ion-content>
+</ion-view>

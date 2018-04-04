@@ -1,0 +1,46 @@
+<ion-view hide-nav-bar="true">
+<ion-content  class="content-wrap" scroll="false">
+  <div class="goBack">
+    <span class="icon_bar_back backs" ng-click="goTome()"></span>
+    <h1>我的收藏</h1>
+  </div>
+  <div ng-if="tab==1" class="no_learn-wrap no_coll_wrap">
+    <img src="./images/noColl.png" alt=""/>
+    <p class="no_inter">还没有收藏哦</p>
+  </div>
+  <ion-scroll ng-if="tab==0" style="width: 100%;height: 90%;margin-top:0;">
+    <div class="classification-bar">共{{collections.length}}门课程</div>
+    <ul>
+      <li ng-repeat="course in collections" ng-click="goIntro(course.id)">
+        <ion-list>
+          <ion-item class="li01">
+            <div class="course-card">
+              <div class="thumbnail">
+                <div style="background-image: url({{course.cache}});background-size: cover;background-position: center center;" class="content-wrap-img"></div>
+                <!--<div class="course-type major" ng-if="course.type=='20'">{{course.credit}}学分</div>-->
+              </div>
+              <h2>{{course.name}}</h2>
+              <div class="other-info hide">
+                <div class="left progress">已学{{course.progress}}</div>
+                <div class="right">{{course.status}}</div>
+              </div>
+              <div class="other-info">
+                <div class="left teacher">
+                  <!--<span class="ion-person"></span>-->
+                  <span ng-repeat="teacher in course.teachers">
+                    <b ng-if="$index<2">{{teacher.teacherName}}</b>
+                    <b ng-if="course.teachers.length>=2&&course.teachers.length==($index+1)">...</b>
+                  </span>
+                </div>
+                <div class="right active">{{course.status}}</div>
+              </div>
+            </div>
+            <ion-option-button class="button-info cancel_collection" ng-click="delete(course.id)">取消收藏</ion-option-button>
+          </ion-item>
+        </ion-list>
+      </li>
+    </ul>
+  </ion-scroll>
+
+</ion-content>
+  </ion-view>

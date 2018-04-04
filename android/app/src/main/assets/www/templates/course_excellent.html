@@ -1,0 +1,25 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="courses_wrap">
+        <div class="goBacks" style="background: #1FB6FF;">
+            <span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1 style="color:#fff;">精品课程</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;margin-top:0;">
+            <ul class="courseList" style="margin-top:10px;">
+                <li ng-repeat="excellent in excellentList">
+                    <div class="schoolCourseCard" ng-click="courseIntro(excellent.id)">
+                        <div class="pic" style="background: url({{excellent.cache}}) no-repeat center center;background-size: cover;)"></div>
+                        <p class="title" ng-bind-html="excellent.description"></p>
+                        <div class="footer clear-fix">
+                            <span class="fl_left name" ng-if="$index<2" ng-repeat="teacher in excellent.instructors">{{teacher.instructorName}}</span>
+                            <span class="fl_right state" ng-show="excellent.statusFlag=='0'">正在进行</span>
+                            <span class="fl_right start" ng-show="excellent.statusFlag=='1'">未开始</span>
+                            <span class="fl_right end" ng-show="excellent.statusFlag=='2'">已结课</span>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+        </ion-scroll>
+    </ion-content>
+</ion-view>

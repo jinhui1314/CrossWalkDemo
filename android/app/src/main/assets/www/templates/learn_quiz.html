@@ -1,0 +1,53 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="learn_quiz_wrap" scroll="false">
+        <div class="goBack">
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1>测验详情</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 100%;">
+            <div class="header" ng-class="!quizObject.score?'quizScore':''">
+                <p class="effective">有效成绩</p>
+                <p class="achievement">{{quizObject.score}}<b>分</b></p>
+            </div>
+            <div class="title">
+                <p>{{quizObject.title}}<span ng-class="submitStatus.className">{{submitStatus.state}}</span></p>
+            </div>
+            <div class="quiz_time">
+                <div class="sub_time fl_left">
+                    <span>测验开始时间</span>
+                    <p>{{quizObject.unlockAtStr}}</p>
+                </div>
+                <div class="end_time fl_right">
+                    <span>测验截止时间</span>
+                    <p>{{quizObject.dueAtStr}}</p>
+                </div>
+            </div>
+            <p class="prompt">{{submitStatus.title}}</p>
+            <button class="btn" ng-class="submitStatus.btnClass"  ng-click="startTopic()" ng-if="canSubmit">开始测验</button>
+            <button class="btn start disabled"  disabled="disabled" ng-if="!canSubmit">开始测验</button>
+            <!--<div class="sub" style="display: {{submitStatus.display2}}" ng-click="viewAnalysis()">-->
+                <!--<button class="start">查看解析</button>-->
+            <!--</div>-->
+        </ion-scroll>
+        <div class="record" ng-if="showSubmisson">
+            <div class="record_inner">
+                <p ng-click="record()">提交记录<i ng-class="isOpen == 0?'ion-chevron-up':'ion-chevron-down'"></i></p>
+                <ul class="record_look" ng-repeat="submissionList in quizSubmissionList">
+                    <li>
+                        <div class="fl_left">
+                            <span class="serial fl_left">{{$index+1}}/{{quizSubmissionList.length}}</span>
+                            <span class="day fl_left">{{submissionList.finishedAt}}</span>
+                        </div>
+                        <div class="fl_right">
+                            <span class="fl_left">{{submissionList.score}}</span>
+                            <span ng-if="submissionList.quizSubmissionId==effectiveQuizSubmissionId" class="analysis fl_left">有效成绩</span>
+                            <span class="fl_right see" ng-click="goSee(submissionList.quizSubmissionId)">查看</span>
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+    </ion-content>
+</ion-view>

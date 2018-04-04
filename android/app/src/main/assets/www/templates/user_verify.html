@@ -1,0 +1,41 @@
+<ion-view hide-nav-bar="true">
+
+  <ion-content class="user_verify_wrap" scroll="false">
+    <div class="goBack">
+      <span class="icon_bar_back backs" ng-click="goTome()"></span>
+      <h1>填写认证信息</h1>
+      <em class="icon-service register_icon_qq" ng-click="customerService()"></em>
+    </div>
+    <ion-scroll style="width: 100%;height: 90%;">
+      <header class="header">
+        <p class="success"><i class="icon_download_sel"></i>登录成功！</p>
+        <div class="students">在校学生请完成身份认证，否则无法获得课程学分</div>
+      </header>
+
+      <div class="con">
+        <form name="verifyForm" ng-submit="goToAuth()" novalidate >
+          <div class="formWrap verify">
+            <label class="item-input texts">
+              <span class="input-label input-sp icon-school input-icon"></span>
+              <input type="text" placeholder="大连理工大学" ng-model="$authModel.schoolName" readonly="readonly" >
+            </label>
+            <label class="item-input texts">
+              <span class="input-label input-sp icon-number input-icon" style="font-family: 'gxbadd';font-size: 26px;"></span>
+              <input type="text" name="no" placeholder="请填写你在本校的学号" ng-model="$authModel.no" required="required" >
+              <!--<span class="error" ng-show="verifyForm.no.$error.required" >不可为空</span>-->
+            </label>
+            <label class="item-input texts">
+              <span class="input-label input-sp icon-userName input-icon"></span>
+              <input type="text" name="name" placeholder="请输入你的真实姓名" ng-model="$authModel.name" required="required" >
+              <!--<span class="error" ng-show="verifyForm.name.$error.required" >不可为空</span>-->
+            </label>
+          </div>
+          <div class="explain"><i class="ion-information-circled"></i>请使用属于您自己的学号信息认证，如果不是您自己的信息会影响您的成绩，所有后果自负</div>
+          <button class="verify_sub" type="submit">提交认证</button>
+          <p class="no_student" ui-sref="home.course({'tentenId':tentenId})">我不是学生</p>
+        </form>
+      </div>
+    </ion-scroll>
+
+  </ion-content>
+</ion-view>

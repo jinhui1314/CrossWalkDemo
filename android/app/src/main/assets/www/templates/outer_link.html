@@ -1,0 +1,15 @@
+<ion-view hide-nav-bar="true">
+  <ion-content scroll="false">
+    <div class="goBack" style="background: #1FB6FF;">
+      <span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>
+      <h1 style="color:#fff;width: 52%;margin:0 auto;">文档详情</h1>
+      <span class="icon-share doc-share"  ng-click="share()"></span>
+    </div>
+    <ion-scroll style="width: 100%;height: 90%;margin-top:0;" scroll="true" overflow-scroll="true">
+      <iframe id="frameNav" data-tap-disabled="true" style="min-height:100%;width:100%;" ng-src="{{hrefSrc}}"></iframe>
+    </ion-scroll>
+
+
+
+  </ion-content>
+</ion-view>

@@ -1,0 +1,31 @@
+<ion-view hide-nav-bar="true">
+
+  <ion-content class="user_forget_wrap" scroll="false">
+    <div class="goBack">
+      <span class="icon_bar_back backs" ng-click="goTome()"></span>
+      <h1>找回密码</h1>
+    </div>
+    <ion-scroll style="width: 100%;height: 90%;">
+      <div class="bindForget_wrap import ">
+        <form name="forgetForm1" method="post" ng-submit="getCode()" novalidate>
+          <div class="formWrap tabulation">
+            <label class="item-input texts">
+              <span class="input-label input-sp">手机</span>
+              <input type="text" name="mobile" placeholder="请输入您注册所用的手机号" ng-model="$forgetModel.mobile" required >
+              <!--<span class="error" ng-show="forgetForm1.mobile.$error.required" >不可为空</span>-->
+            </label>
+          </div>
+          <button class="next_step" type="submit" style="width: 100%;">获取验证码</button>
+          <p class="obtain phone">手机版暂不支持邮箱找回密码,邮箱注册用户请前往高校邦网站找回,或<a ui-sref="account_signup">立即使用手机注册</a></p>
+        </form>
+      </div>
+
+      <div class="escrowLogin">
+        <span>未绑定手机号和邮箱</span>
+        <button type="button" ng-click="validateSchool()">学号找回密码</button>
+      </div>
+
+    </ion-scroll>
+  </ion-content>
+
+</ion-view>

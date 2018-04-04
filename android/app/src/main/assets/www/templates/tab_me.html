@@ -1,0 +1,142 @@
+<ion-view hide-nav-bar="true" class="tabMe_wrap">
+
+  <ion-content scroll="false">
+
+    <div class="goBack" style="background: #1FB6FF;border-bottom:0;">
+      <!--<span ng-if="showHelp == false" class="backs register_icon_qq icon-services" style="font-size:16px;" ng-click="customerService()">帮助</span>-->
+      <!--<span class="backs register_icon_qq icon-help" style="font-size:16px;" ng-click="goToHelpCenter()">帮助</span>-->
+      <h1 style="color:#fff;">我的</h1>
+      <em class="setting" ng-click="setting()"></em>
+    </div>
+
+    <ion-scroll style="height: {{platformType2()}};width: 100%;">
+      <div class="aside" ng-click="personal()" style="background: #1FB6FF;border-bottom:0;">
+        <div class="aside_wrap">
+          <dl class="fl_left">
+            <dt class="fl_left">
+              <img src="{{tokenStatus&&meInfo.avatar?meInfo.avatar:'./images/userBg_120.png'}}" err-src="./images/userBg_120.png" alt=""/>
+            </dt>
+            <dd class="fl_left">
+              <div class="auto" ng-show="accessToken&&tokenStatus"><p>{{meInfo.name || meInfo.mobile}}</p><em ng-show="meInfo.bindingStatus==1" class="certified"><span style="line-height:11px;color:#4DC168;vertical-align:top;font-size:11px;margin-top:6%;">已认证</span><i class="ion-checkmark-circled"></i></em></div>
+              <span ng-bind-html="meState()"> </span>
+            </dd>
+          </dl>
+          <p ng-bind-html="isLogin()" class="fl_right"></p>
+        </div>
+      </div>
+      <ul class="list_wrap">
+        <li ng-click="download()" class="download">离线课程<span class="downloadingNum" ng-class="downloadingNum>99?'more':''" ng-show="downloadingNum>0">{{downloadingNum | numberFilter}}</span><em></em></li>
+        <li ng-click="goToHelpCenter()">帮助中心<em></em></li>
+        <!--<li ng-click="goCommunity()" class="download">我的社区<em></em></li>-->
+        <li ng-click="mesCenter()" class="message">消息中心<span style="{{messageRead}}" ng-if="unReadMsg!=0 && unReadMsg !=undefined"></span></li>
+      </ul>
+
+      <div style="background:#F0F2F5;height: 10px;width: 100%;"></div>
+
+      <div class="course_wrap">
+        <!-- <div class="title_bar" ng-click="learnAnalysis()"><p class="fl_left">我的学习分析</p><span class="fl_right ion-chevron-right" style="color:#6E7880;"></span></div> -->
+        <div class="title_bar" ng-click="myProject()" ng-if="isShowProject"><p class="fl_left">我的项目</p><span class="fl_right ion-chevron-right" style="color:#6E7880;"></span></div>
+        <div class="title_bar">
+          <p class="fl_left">我的课程</p>
+          <div ng-click="selectView()" ng-show="accessToken&&tokenStatus">
+            <p class="fl_right" style="margin-right:20px;font-size: 14px;">{{courseStatus}}</p>
+            <i class="ion-chevron-down"></i>
+          </div>
+          <div ng-show="accessToken&&tokenStatus" class="tabMeHideBox" ng-click="tabMeHideBox()" style="display: {{isShow}}">
+            <em></em>
+            <ul>
+              <li ng-click="doGoing()" ng-class="auth == 0?'active':''">学习中</li>
+              <li ng-click="willStart()" ng-class="auth == 1?'active':''">未开课</li>
+              <li ng-click="isEnds()" ng-class="auth == 2?'active':''">已结课</li>
+            </ul>
+          </div>
+        </div>
+
+        <div ng-if="noLogin == 1" class="no_learn-wrap" style="width: 100%;margin-top:50px;">
+          <img src="./images/noCourse.png" alt=""/>
+          <p class="no_inter" style="padding-bottom: 20px;">登录后才能查看学习记录哦</p>
+        </div>
+
+        <div ng-if="noLogin == 0">
+          <div ng-if="auth == 0">
+
+            <ul>
+              <li ng-repeat="course in authCourse track by $index" ng-click="goIntro(course.id,course.types)" ng-if="going==0">
+                <div class="course-card">
+                  <div class="thumbnail">
+                    <div style="background-image: url({{course.cache}});background-size: cover;background-position: center center;border-radius: 4px;" class="content-wrap-img"></div>
+                  </div>
+                  <h2><span class="creditCourse" ng-show="course.type == '20' && !isPyTenant()">学分课</span> <span class="exam" ng-show="course.examNum != '0'">内含考试</span>{{course.name}}</h2>
+                  <div class="other-info">
+                    <div class="left progress" ng-if="course.progress<100">已学{{course.progress}}％</div>
+                    <div class="left progress" ng-if="course.progress==100&&course.status=='正在进行'">课程已学完!请静候结课</div>
+                    <div class="left progress" ng-if="course.progress==100&&course.status!='正在进行'">课程已学完!{{course.status}}</div>
+
+                    <!--<div class="right">{{course.status}}</div>-->
+                  </div>
+                </div>
+              </li>
+              <li ng-if="auth == 0&&going == 1" class="no_learn-wrap" style="width: 100%;margin-top:50px;">
+                <img src="./images/noCourse.png" alt=""/>
+                <p class="no_inter" style="padding-bottom: 20px;">还没有课程哦</p>
+              </li>
+            </ul>
+
+            <network ng-show="networkStates1 == 'none'&&accessToken"></network>
+
+          </div>
+
+          <div ng-if="auth == 1">
+            <ul>
+              <li ng-repeat="course in willStartCourse track by $index" ng-if="will == 0">
+                <div class="course-card">
+                  <div class="thumbnail">
+                    <div style="background-image: url({{course.cache}});background-size: cover;background-position: center center;border-radius: 4px;" class="content-wrap-img"></div>
+                  </div>
+                  <h2><span class="creditCourse" ng-show="course.type == '20' && !isPyTenant()">学分课</span> <span class="exam" ng-show="course.examNum != '0'">内含考试</span>{{course.name}}</h2>
+                  <div class="other-info">
+                    <!--<div class="left progress">已学{{course.progress}}％</div>-->
+                    <div class="left progress">{{course.status}}</div>
+                  </div>
+                </div>
+              </li>
+              <li ng-if="auth == 1&&will == 1" class="no_learn-wrap" style="width: 100%;margin-top:50px;">
+                <img src="./images/noCourse.png" alt=""/>
+                <p class="no_inter" style="padding-bottom: 20px;">还没有课程哦</p>
+              </li>
+            </ul>
+            <network ng-show="networkStates2 == 'none'&&accessToken"></network>
+
+          </div>
+
+          <div ng-if="auth == 2">
+            <ul>
+              <li ng-repeat="course in isEndCourse track by $index" ng-click="goIntro(course.id,course.types)" ng-if="ends == 0">
+                <div class="course-card">
+                  <div class="thumbnail">
+                    <div style="background-image: url({{course.cache}});background-size: cover;background-position: center center;border-radius: 4px;" class="content-wrap-img"></div>
+                  </div>
+                  <h2><span class="creditCourse" ng-show="course.type == '20' && !isPyTenant()">学分课</span> <span class="exam" ng-show="course.examNum != '0'">内含考试</span>{{course.name}}</h2>
+                  <div class="other-info">
+                    <div class="left progress" ng-if="course.showScore == true">本课成绩:{{course.publishScore}}</div>
+                    <div class="left progress" ng-if="course.showScore == false">{{course.prompt}}</div>
+                    <!--<div class="right">{{course.status}}</div>-->
+                  </div>
+                </div>
+              </li >
+              <li ng-if="auth == 2&&ends == 1" class="no_learn-wrap" style="width: 100%;margin-top:50px;">
+                <img src="./images/noCourse.png" alt=""/>
+                <p class="no_inter" style="padding-bottom: 20px;">还没有课程哦</p>
+              </li>
+            </ul>
+            <network ng-show="networkStates3 == 'none'&&accessToken"></network>
+          </div>
+        </div>
+
+      </div>
+
+    </ion-scroll>
+
+  </ion-content>
+
+</ion-view>

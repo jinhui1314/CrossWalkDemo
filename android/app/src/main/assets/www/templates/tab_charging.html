@@ -1,0 +1,36 @@
+<ion-view>
+  <ion-header-bar class="top-header">
+    <h1>充充电</h1>
+  </ion-header-bar>
+  <ion-content class="has-header charging" delegate-handle="chargingView" on-scroll="getMoreList()">
+    <ion-refresher
+      pulling-text="下拉刷新..."
+      on-refresh="doRefresh()">
+    </ion-refresher>
+    <ion-slide-box style="height:{{getHeight()}}px;" does-continue="true" auto-play="true" slide-interval="2000" show-pager="true" delegate-handle="imageviewer" on-slide-change="slideHasChanged(index)" ng-if="discovery.length">
+      <ion-slide class="bar-stable" ng-repeat="found in discovery" style="width: 100%;">
+        <img src="{{found.cache}}" err-src="{{found.sourceImage}}" alt="" style="width: 100%;height: 100%;" ng-click="goLink($index,found)"/>
+      </ion-slide>
+    </ion-slide-box>
+    <div class="tab_container">
+      <div class="tab_inner">
+        <div class="tab_default" ng-repeat="d in tabNames" ng-click="activeSlide($index,d.categoryId)" ng-class="slideIndex==$index ? 'tab_select' : '' ">
+          {{d.categoryName}}
+        </div>
+      </div>
+    </div>
+    <div class="charging-container">
+      <div class="charging-box" ng-repeat="list in lists" ng-click="goDetail(list.articleId)">
+        <div class="left-con">
+          <h1>{{list.title}}</h1>
+          <p>{{list.desc}}</p>
+          <div class="line"></div>
+          <h6>{{list.author}}</h6>
+        </div>
+        <img class="right-img" ng-src="{{list.cover}}" />
+      </div>
+    </div>
+    <loading ng-show="hasMore==1"></loading>
+  </ion-content>
+
+</ion-view>

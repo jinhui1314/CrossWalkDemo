@@ -1,0 +1,36 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="liveVideoDetail_wrap">
+        <div class="boxImg" style="background: url('{{liveVideoObj.cache}}') no-repeat center center;background-size:cover;">
+            <span class="ion-ios-arrow-left fl_left go_back {{style}}" ng-click="goBack()"></span>
+        </div>
+        <ul class="navBar">
+            <li ng-click="showVideoMessage()"><span ng-class="tab == 0?'active':''">直播信息</span></li>
+            <li ng-click="showChat()"><span ng-class="tab == 1?'active':''">聊天区</span></li>
+            <li class="li03" ng-click="showWhiteboard()"><span ng-class="tab == 2?'active':''">白板</span></li>
+        </ul>
+        <div ng-if="tab == 0">
+            <div class="video_title">
+                <h1>{{liveVideoObj.title}}</h1>
+                <span>主讲人：{{liveVideoObj.teacherName}} </span>
+                <span>时间：{{liveVideoObj.startAt}}至{{liveVideoObj.endAt}}</span>
+            </div>
+            <div class="video_wrap">
+                <div class="video_con">
+                    <h2>直播介绍</h2>
+                    <p ng-bind-html="liveVideoObj.introduce"></p>
+                </div>
+                <div class="video_data">
+                    <h2>课前资料</h2>
+                    <p ng-repeat="liveVideo in liveVideoPapers">{{liveVideo.title}}</p>
+                </div>
+            </div>
+            <p class="prompt">请前往高校邦网站查看并下载附件</p>
+        </div>
+        <div ng-if="tab == 1" class="chat">
+            <p>聊天区将在直播开始后开放，敬请期待</p>
+        </div>
+        <div ng-if="tab == 2" class="chat">
+            <p>白板将在直播开始后显示内容，敬请期待</p>
+        </div>
+    </ion-content>
+</ion-view>

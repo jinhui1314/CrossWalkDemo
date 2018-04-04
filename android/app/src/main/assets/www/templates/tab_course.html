@@ -1,0 +1,83 @@
+<ion-view hide-nav-bar="true">
+
+    <ion-content class="courses_wrap" scroll="false">
+        <div class="goBack" style="background: #1FB6FF;border-bottom:0;" ng-show="showList == 0">
+            <!--<span class="icon-scan_code backs icon_scan_wrap" ng-click="goScan()"></span>-->
+            <h1 style="color:#fff;">{{userObj.schoolName}}</h1>
+        </div>
+        <div class="goBack" ng-show="showList == 1 || showList == 2">
+            <h1>高校邦</h1>
+        </div>
+        <ion-scroll on-scroll="scrollHandle1()" delegate-handle="tabCourseScroll" style="width: 100%;height: 93%;">
+            <div ng-show="showList == 0">
+                <img src="../www/images/course_cover_def.png" alt="" ng-if="networkStates == 'none'" style="height: 166px;width: 100%;"/>
+                <img src="{{courseBanner[0].cache}}" err-src="{{courseBanner[0].sourceImage}}" style="width:100%" ng-if="courseBanner.length==1" />
+                <ion-slide-box style="height:{{getHeight()}}px;" does-continue ="true" auto-play="true" slide-interval="2000" show-pager="true"  delegate-handle="image-viewer"  on-slide-change="slideHasChanged(index)" ng-if="courseBanner.length>1">
+                    <ion-slide class="bar-stable" ng-repeat="banner in courseBanner" style="width: {{bannerWith}}">
+                        <img src="{{banner.cache}}" err-src="{{banner.sourceImage}}" alt="" ng-click="goLinks($index)" style="background-size: cover;width: {{bannerWith}};height: 100%;"/>
+                    </ion-slide>
+                </ion-slide-box>
+
+                <div class="school_notice">
+                    <div style="height: 25px;">
+                        <span class="fl_left">院校公告</span>
+                    </div>
+                    <div class="notice_wrap">
+                        <ul class="{{announceClass}}">
+                            <li ng-repeat="announce in announces track by $index" ng-click="goNotice(announce.id)">{{announce.title}}</li>
+                        </ul>
+                    </div>
+                    <div class="notice_pic"></div>
+                </div>
+                <div class="live_container" ng-show="liveShow==1&&liveInfo.canPlay">
+                    <div class="live_inner" ng-click="goLive(liveInfo)">
+                        <img src="{{liveInfo.cover}}" width="100%" />
+                        <div class="conner"></div>
+                    </div>
+
+                </div>
+                <div class="credit_course_wrap">
+                    <div class="credit_course" ng-click="getMore()">
+                        <p class="fl_left">学分课</p>
+                        <span class="fl_right">查看全部<i class="ion-ios-arrow-right"></i></span>
+                    </div>
+                    <ul class="courseList">
+                        <li ng-repeat="credit in courseList">
+                            <div class="schoolCourseCard" ng-click="courseIntro(credit)">
+                                <div class="pic" style="background: url({{credit.cache}}) no-repeat center center;background-size: cover;)"></div>
+                                <p class="title">{{credit.name}}</p>
+                                <div class="footer">
+                                    <div ng-repeat="teacher in credit.teachers">
+                                        <span class="fl_left name" ng-if="$index<1">{{teacher.teacherName}}</span>
+                                    </div>
+                                    <span class="fl_right state" ng-show="credit.statusFlag=='1'">正在进行</span>
+                                    <span class="fl_right start" ng-show="credit.statusFlag=='2'">未开始</span>
+                                    <span class="fl_right end" ng-show="credit.statusFlag=='0'">已结课</span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div ng-show="showList == 1" class="no_login_wrap">
+                <div class="noLogin"></div>
+                <p>登录有三宝  内容形式体验好</p>
+                <p>点击登录  即可享受优质服务</p>
+                <div class="btn" ng-click="goLogin()">登录</div>
+            </div>
+            <div ng-show="showList == 2" class="no_login_wrap">
+                <div class="noLogin noValidate"></div>
+                <p>认证福利好  想拿学分没烦恼</p>
+                <p>点击认证  即可开启学习之旅</p>
+                <div class="btn" ng-click="goValidate()">去认证</div>
+                <div class="liveBtn" ng-show="liveShow==1&&liveInfo.canPlay" style="text-align:center;font-size:15px;color:#1FB6FF;line-height:24px;margin-top:17px;"><span ng-click="goLive(liveInfo)">我要看直播 &raquo;</span></div>
+            </div>
+            <network ng-show="networkStates=='none'&&accessToken"></network>
+        </ion-scroll>
+        <div class="mask" ng-if="showTip==1"></div>
+        <daytip ng-if="showTip==1 && courseGuide == 0"></daytip>
+        <courseguide ng-if="courseGuide == 1 && showList == 0"></courseguide>
+        <span class="select_course" ng-if="selectCourse == 1 && showList == 0" ng-click="showSelectCourse()"></span>
+    </ion-content>
+
+</ion-view>

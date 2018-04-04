@@ -1,0 +1,39 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false">
+
+        <div class="goBack" style="background: #1FB6FF;">
+            <span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1 style="color:#fff;">绑定帐号</h1>
+        </div>
+
+        <ion-scroll style="width: 100%;height: 90%;">
+            <div class="escrow_login_wrap">
+                <div class="headers">为你的高校邦账号设置密码，以后可安全登录</div>
+                <div class="head_portrait">
+                    <div class="pic" style="background: url({{escrowObj.icon}}) no-repeat;background-size: cover;"></div>
+                    <p>{{escrowObj.nickName}}</p>
+                </div>
+
+                <div class="bindForget_wrap" style="padding-top:0;">
+                    <form  name="form1" novalidate>
+                        <div class="formWrap tabulation" style="position: relative;">
+                            <label class="item-input texts">
+                                <span class="input-label" style="margin-top:4px;">手机号</span>
+                                <input type="text" name="validateCode" placeholder="请输入11位手机号" ng-model="mobile" required />
+                            </label>
+                            <label class="item-input texts">
+                                <span class="input-label" style="margin-top:4px;">验证码</span>
+                                <input type="text" name="validateCode" placeholder="请输入验证码" ng-model="validateCode" required />
+                            </label>
+                            <span ng-bind-html="paracont" ng-click="goCode(mobile)" ng-class="paraclass == 'no_yzm'?'no_escrow_yzm':'escrow_yzm'">获取验证码</span>
+                        </div>
+                        <button ng-if="mobile !=null && validateCode !=null" class="escrow_button" type="submit" ng-click="goPassword(mobile,validateCode)">下一步</button>
+                        <button ng-if="mobile == null || validateCode == null" class="escrow_btn" type="submit">下一步</button>
+                    </form>
+                </div>
+            </div>
+
+        </ion-scroll>
+
+    </ion-content>
+</ion-view>

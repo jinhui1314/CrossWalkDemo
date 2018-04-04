@@ -1,0 +1,28 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="user_binding_wrap" scroll="false">
+
+        <div class="goBack">
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1>绑定手机</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;">
+            <div class="header">绑定手机号，登录更方便，账号更安全</div>
+
+            <div class="bindForget_wrap">
+                <form name="bindingForm" ng-submit="goGetCode()" novalidate>
+                    <div class="formWrap tabulation">
+                        <label class="item-input texts">
+                            <span class="input-label input-sp">手机</span>
+                            <input type="text" name="mobile" placeholder="请输入11位手机号" ng-model="$bindingModel.mobile" required>
+                            <!--<span class="error" ng-show="bindingForm.mobile.$error.required" >不可为空</span>-->
+                        </label>
+                    </div>
+                    <button class="next_step" type="submit">获取验证码</button>
+                </form>
+            </div>
+        </ion-scroll>
+
+
+    </ion-content>
+
+</ion-view>

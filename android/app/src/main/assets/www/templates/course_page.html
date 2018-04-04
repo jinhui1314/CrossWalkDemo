@@ -1,0 +1,15 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="course_ware_wrap" style="background: #fff;">
+        <div class="goBack" style="background: #1FB6FF;border-bottom: 0;">
+            <span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1 style="color:#fff;">页面详情</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;">
+            <div class="header">
+                <h2 style="padding-bottom:10px;">{{page.title}}</h2>
+                <div class="content" ng-bind-html="page.body"></div>
+            </div>
+        </ion-scroll>
+        <network ng-if="networkStates == 'none'"></network>
+    </ion-content>
+</ion-view>

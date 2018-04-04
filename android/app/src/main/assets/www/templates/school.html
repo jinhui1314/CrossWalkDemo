@@ -1,0 +1,51 @@
+<ion-view title="选择学校" hide-nav-bar="true">
+
+
+  <ion-content class="{{schoolStyle}}" scroll="false">
+
+    <div class="goBack">
+      <span class="icon_bar_back backs" ng-click="goBack()"></span>
+      <h1>选择学校</h1>
+    </div>
+
+    <!--<div class="red">以下为高校邦平台的学校列表,请选择您要进入的学校</div>-->
+    <div class="bar item-input-inset search_wrap">
+      <label class="item-input-wrapper item_input_wrap">
+        <i class="icon  ion-ios-search-strong placeholder-icon"></i>
+        <input type="search" ng-model="searchName" placeholder="输入学校名称">
+      </label>
+    </div>
+
+      <ion-scroll id="ionicScroll">
+      <ul ng-show="searchName!=''&&(schoolsList|filter:searchName).length!=0">
+        <li ng-repeat="school in schoolsList | filter:{name:searchName} |orderBy:order"  class="school_list">
+          <!--<div class="item-divider school_divider" ng-if="!school.name">-->
+            <!--<h2 name="{{school}}" id="{{school}}">{{school|uppercase}}</h2>-->
+          <!--</div>-->
+          <div class="item school_item" ng-click="goHome(school.entryLevel,school.schoolId,school.name,school.tenantId)" ng-if="school.name">
+            <h2>{{school.name}}</h2>
+          </div>
+        </li>
+      </ul>
+      <div ng-show="searchName==''" class="selectSchool">
+        <img src="./images/nologin.png" alt="" />
+        <p>我们已覆盖全国1000多所高校<br />请选择您的学校</p>
+      </div>
+      <div  ng-show="searchName!=''&&(schoolsList|filter:searchName).length==0" style="text-align: center;" class="no_learn-wrap">
+        <img src="./images/nosearch.png" alt=""/>
+        <p class="no_inter">未搜索到相应的学校，请重试。</p>
+      </div>
+        </ion-scroll>
+    <!--</div>-->
+
+
+
+    <!--<div class="letter_wrap" >-->
+      <!--<div ng-repeat="letter in sort"  ng-click="onLetter(letter)">-->
+        <!--&lt;!&ndash;<span ng-bind-html="letterWrap(letter)"></span>&ndash;&gt;-->
+        <!--<span>{{letter|uppercase}}</span>-->
+      <!--</div>-->
+    <!--</div>-->
+
+  </ion-content>
+</ion-view>

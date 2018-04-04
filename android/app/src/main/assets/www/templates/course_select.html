@@ -1,0 +1,28 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="select_course_wrap">
+        <div class="goBack">
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1>消息详情</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;" class="content">
+            <div class="time">
+                <p>起止时间：{{selectCourse.startAt}} - {{selectCourse.endAt}}</p>
+                <p>选课退课只能在开放时间段内进行操作</p>
+            </div>
+            <div class="pic">
+                <div class="guide1">
+                    <p>1、打开电脑，百度搜索“高校邦”，进入官网</p>
+                    <span></span>
+                </div>
+                <div class="guide2">
+                    <p>2、登录账号（没登录过高校邦的新同学请先注册）</p>
+                    <span></span>
+                </div>
+                <div class="guide3">
+                    <p>3、登录成功后会自动跳转学校页面，开始选课</p>
+                    <span></span>
+                </div>
+            </div>
+        </ion-scroll>
+    </ion-content>
+</ion-view>

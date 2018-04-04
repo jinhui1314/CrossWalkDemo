@@ -1,0 +1,24 @@
+<ion-view hide-nav-bar="true">
+
+    <!--<ion-nav-buttons>-->
+        <!--<span class="icon_bar_back backs"></span>-->
+        <!--<h1 class="title" style="display: none"><i class="icon_bar_number topic-icon-outline keys-ion-outline"></i>1/2</h1>-->
+        <!--<span class="answer-wrong button button-clear" ><i ng-click="doCheck()" class="{{checkstate?'icon_bar_only_sel':'icon_bar_only_def'}} topic-ion-outline">只看错题</i></span>-->
+
+    <!--</ion-nav-buttons>-->
+
+    <ion-content class="answer_card_wrap">
+
+        <div class="{{navBarStyle}}">
+            <span class="icon_bar_back lefts" ng-click="goTome()"></span>
+            <span class="rights ans" style="position: relative;" ng-click="doCheck()"><span class="seeWrong {{checkstate?'icon-bar_only_sel':'icon-bar_only_def'}}"></span>只看错题</span>
+        </div>
+
+        <div class="header">本次成绩<span>{{score}}</span>分，共<span>{{submission.length}}</span>题，答错<span>{{wrongCount}}</span>题</div>
+        <ul>
+            <li class="fl_left" ng-repeat="s in submission" ng-click="goAnalysis($index)" ng-if="!(checkstate&&s.correct)">
+                <span class="{{s.correct?'':'wrong'}}">{{$index+1}}</span>
+            </li>
+        </ul>
+    </ion-content>
+</ion-view>

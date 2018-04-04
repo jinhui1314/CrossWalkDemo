@@ -1,0 +1,23 @@
+<ion-view hide-nav-bar="true">
+  <ion-content class="me_authentication_wrap" scroll="false">
+    <div class="goBack">
+      <span class="icon_bar_back backs" ng-click="goTome()"></span>
+      <h1>认证信息</h1>
+      <i style="color:#fff;" ng-click="addAuthen()">添加认证</i>
+    </div>
+    <ion-scroll style="width: 100%;height: 95%;margin-top: 0px;">
+      <div ng-repeat="authen in authenInfo">
+        <p class="authen">认证－<span>{{authen.schoolName}}</span></p>
+        <ul class="schoolMessage">
+          <li><span>姓名</span>{{authen.name}}</li>
+          <li><span>学校</span>{{authen.schoolName}}</li>
+          <li><span>学号</span>{{authen.no}}</li>
+          <li><span>院系</span>{{authen.schoolDepartment}}</li>
+          <li><span>专业</span>{{authen.major}}</li>
+          <li><span>班级</span>{{authen.schoolClass}}</li>
+        </ul>
+      </div>
+    </ion-scroll>
+
+  </ion-content>
+</ion-view>

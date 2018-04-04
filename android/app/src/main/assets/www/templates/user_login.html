@@ -1,0 +1,93 @@
+<ion-view hide-nav-bar="true">
+  <ion-content class="user_login_wrap">
+    <header class="header">
+      <span style="color:#2A2F33;font-family: gxbIcon;" class="back icon_bar_back" ng-click="goHome()"></span>
+      <span class="login_icon_qq" ng-click="customerService()"><em class="icon-service"></em></span>
+      <div class="login-pic"><img src="./images/loginBg.png" alt=""/></div>
+
+    </header>
+
+    <div class="con">
+      <form  name="loginForm" class="loginForm"  novalidate>
+        <input type="hidden" name="schoolId" ng-model="$loginModel.schoolId"  />
+        <div class="school_no2 formWrap">
+          <div class="item-input texts" ng-click="goSchool()">
+            <span class="input-label input-sp icon-school input-icon"></span>
+            <input type="text" id="selectSchool" name="schoolName" placeholder="请选择学校"   ng-model="$loginModel.schoolName" readonly="readonly" />
+            <span class="ion-chevron-right login_arrow"></span>
+          </div>
+          <div class="item-input texts">
+            <span class="input-label input-sp icon-number input-icon" style="font-family: 'gxbadd';font-size: 26px;"></span>
+            <input type="text" name="userName"  placeholder="请输入学号" ng-model="$loginModel.userName" required   />
+          </div>
+          <div class="item-input texts">
+            <span class="input-label input-sp icon-password input-icon"></span>
+            <input type="password" name="password" placeholder="请输入高校邦密码" ng-model="$loginModel.password"/>
+
+          </div>
+          <span class="forget_password" ng-click="getForgetPassword()">忘记密码？</span>
+          <span ng-if="$loginModel.userName" class="ion-close-circled loginClear" style="right:20px;" ng-click="clearInput()"></span>
+          <span ng-if="$loginModel.password" class="ion-close-circled loginClearIcon userClear" ng-click="clearLoginInput()"></span>
+          <button ng-if="$loginModel.schoolName !=null && $loginModel.userName !=null && $loginModel.password !=null" class="sign_up" name="submit"  type="submit" ng-click="doLogin()">登录</button>
+          <button ng-if="$loginModel.schoolName == null || $loginModel.userName == null || $loginModel.password == null" class="no_signUp" name="submit"  type="submit">登录</button>
+          <!--<p class="prompt">学号信息认证后，才能用学号登录</p>-->
+        </div>
+
+      </form>
+
+
+      <ul class="link">
+        <li style="color:#1FB4FF;" ng-click="account()">帐号登录</li>
+        <li class="receive" ui-sref="account_signup">免费注册</li>
+      </ul>
+
+      <div class="escrowLogin escrowLoginNo hide-on-keyboard-open">
+        <span>第三方登录</span>
+        <i class="icon-weChat escrow_wechat" ng-click="goWechat()"></i>
+        <i class="icon-QQ escrow_qq" ng-click="goqq()"></i>
+      </div>
+    </div>
+
+    <script id="my-modal.html" type="text/ng-template">
+      <div class="modal">
+        <ion-content class="{{schoolStyle}}" scroll="false" id="schoolContent">
+          <div class="goBack">
+
+            <h1>选择学校</h1>
+            <span class="icon-closeBig" style="font-family: gxbIcon;right:0;font-size:25px;left:initial;padding-top:10px;" ng-click="closeModal()"></span>
+          </div>
+
+          <!--<div class="red">以下为高校邦平台的学校列表,请选择您要进入的学校</div>-->
+          <div class="bar item-input-inset search_wrap">
+            <label class="item-input-wrapper item_input_wrap">
+              <i class="icon  ion-ios-search-strong placeholder-icon"></i>
+              <input type="text" id="searchSchool" ng-model="searchName" placeholder="输入学校名称" autofocus="true" ng-change="redrawScroll()" required />
+            </label>
+          </div>
+          <ion-scroll id="ionicScroll" delegate-handle="schoolScroll">
+            <ul ng-show="searchName!=null&&searchName!=''&&(schoolsList|filter:searchName).length!=0">
+              <li ng-repeat="school in schoolsList | filter:{name:searchName} |orderBy:order"  class="school_list">
+                <!--<div class="item-divider school_divider" ng-if="!school.name">-->
+                <!--<h2 name="{{school}}" id="{{school}}">{{school|uppercase}}</h2>-->
+                <!--</div>-->
+                <div class="item school_item" ng-click="selectThisSchool(school)" ng-if="school.name">
+                  <h2>{{school.name}}</h2>
+                </div>
+              </li>
+            </ul>
+            <div ng-show="searchName==''||searchName==null" class="selectSchool">
+              <img src="./images/nologin.png" alt="" />
+              <p>请输入关键字，搜索并选择你的学校</p>
+            </div>
+            <div  ng-show="searchName!=''&&(schoolsList|filter:searchName).length==0" style="text-align: center;" class="no_learn-wrap">
+              <img src="./images/nosearch.png" alt=""/>
+              <p class="no_inter">未搜索到相应的学校，请重试。</p>
+            </div>
+          </ion-scroll>
+        </ion-content>
+      </div>
+    </script>
+
+
+  </ion-content>
+</ion-view>

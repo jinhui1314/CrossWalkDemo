@@ -1,0 +1,22 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="help_question_wrap" scroll="false">
+        <div class="goBack" style="background: #1FB6FF;border-bottom:0;">
+
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1 style="color:#fff;width: 60%;margin:0 auto;">{{navTitle}}</h1>
+            <i class="icon_search_wrap" style="width: 40px;height: 40px;display: inline-block;" ng-click="searchHelp()"><i class="icon-search" style="font-family: 'gxbIcon';"></i></i>
+
+        </div>
+        <ion-scroll style="width: 100%;height:90%;" class="scroll_layer" delegate-handle="mainScroll" on-scroll="scrollHandle()">
+            <ul class="help_question_ul">
+                <li ng-click="goAnswer(list.helpCenterBodyId)" ng-repeat="list in questionList">{{list.title}}</li>
+            </ul>
+
+            <loading ng-show="showMoreBtn==1"></loading>
+
+            <network ng-if="networkStates == 'none'"></network>
+
+        </ion-scroll>
+
+    </ion-content>
+</ion-view>

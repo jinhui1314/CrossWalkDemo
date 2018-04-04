@@ -1,0 +1,55 @@
+<ion-view hide-nav-bar="true">
+  <ion-content scroll="false" class="course_broadcast_wrap" style="background: #fff;">
+    <div class="goBack" style="background: #1FB6FF;border-bottom: 0;">
+      <span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>
+      <h1 style="color:#fff;">{{className}}</h1>
+    </div>
+    <ion-scroll style="width: 100%;height: 90%;">
+        <h2>{{liveInfo.title}}</h2>
+        <div class="content">
+          <div class="inner">
+            <div class="label">主 讲 人：</div>
+            <div class="detail">{{liveInfo.teacherName}}</div>
+          </div>
+          <div class="inner">
+            <div class="label">时 &nbsp; &nbsp; 间：</div>
+            <div class="detail">{{liveInfo.startAt}} 至 {{liveInfo.endAt}}</div>
+          </div>
+        </div>
+        <div class="intro">
+          <div class="title">直播介绍：</div>
+          <div class="detail" ng-bind-html="liveInfo.introduce"></div>
+        </div>
+
+        <div class="material">
+          <div class="title"><span>直播资料：</span></div>
+          <ul>
+            <li ng-repeat="item in materials" ng-click="showEnclosure(item)">
+              <div class="doc-icon">
+                <div class="div_3_1" ng-class="item.className">
+                  <span ng-show="item.className == ''">.{{item.fileType}}</span>
+                </div>
+              </div>
+              <div class="m-intro">
+                <div class="m-title">{{item.title}}</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="" ng-show="(stage == 1 )&& liveInfo.password.length">
+            <div class="intro">
+                <div class="title">直播密码：</div>
+                <div ><input style="margin-top: 5px;width: 200px;" type="password" ng-focus="passwordFocus()" ng-blur="passwordBlur()" placeholder="请输入直播间密码" maxlength="10" ng-model="liveInfo.stuPassword"></div>
+            </div>
+        </div>
+        <div style="padding-bottom:10px;margin-bottom:5px;">
+
+          <div class="signBtn" ng-click="goWebCast(liveInfo)" ng-show="stage == 1">签到进入</div>
+          <div class="signBtn disabled" ng-show="stage==0">尚未开始</div>
+          <div class="signBtn disabled" ng-show="stage==-1">直播已结束</div>
+        </div>
+      </div>
+    </ion-scroll>
+    <network ng-if="networkStates == 'none'"></network>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,30 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="search_course_wrap">
+        <div class="goBack" style="background: #1FB6FF;border-bottom:0;">
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <i class="icon-search icon-search-course" style="width: 10px;"></i>
+            <input ng-class="blur == 1?'proficients':'proficient'" type="text" placeholder="输入课程名称" ng-model="searchName" ng-focus="goSearchs()" ng-blur="showBlur()" ng-change="hideNoCourse()"/>
+            <em ng-click="goSearch(searchName)" ng-show="blur == 0">搜索</em>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;">
+            <div class="courseWrap" ng-if="tab == 2">
+                <p class="title">共{{courseList.length}}门相关课程</p>
+                <div class="course" ng-repeat="searchCourse in courseList" ng-click="goIntro(searchCourse.id)">
+                    <div class="img-box fl_left" style="background: url({{searchCourse.image}}) no-repeat center center;background-size: cover;"></div>
+                    <div class="fl_right" style="width: 65%;margin-left: 3%;">
+                        <p class="con">{{searchCourse.name}}</p>
+                        <p class="foot">{{searchCourse.classIntroduction}}</p>
+                    </div>
+                </div>
+            </div>
+            <div ng-if="tab==1" class="no_course">没有“{{searchName}}”相关课程</div>
+            <div class="search_record" ng-show="tab == 0 && !searchName && searchList.length>0">
+                <p>历史记录</p>
+                <ul>
+                    <li ng-repeat="s in searchList" ng-if="$index<5" ng-click="goSearch(s)">{{s}}</li>
+                </ul>
+                <span ng-click="emptyMessage()">清空搜索记录</span>
+            </div>
+        </ion-scroll>
+    </ion-content>
+</ion-view>

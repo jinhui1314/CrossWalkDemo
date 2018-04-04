@@ -1,0 +1,13 @@
+<div class="day-tip">
+  <img src="{{tips.imgUrl}}" onerror="javascript:this.src='images/tip_bg.png'" id="tipImg" />
+  <a href="javascript:void(0)" class="close" ng-click="closeTip()"></a>
+  <div class="tip-content">
+    <div class="content">{{tips.body}}</div>
+    <div class="from">—— {{tips.title}}</div>
+    <img src="images/code.png"  id="code" style="display:none;" />
+    <img src="images/logo.png" id="logo" style="display:none;" />
+  </div>
+
+  <div class="share-btn" style="background: url({{tips.btnUrl}}) no-repeat;background-size: contain;" ng-click="shareTip(tips.shareImagePath)"></div>
+
+</div>

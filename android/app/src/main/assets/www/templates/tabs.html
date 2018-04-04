@@ -1,0 +1,20 @@
+<ion-tabs class="tabs-icon-top tabs-color-active-positive">
+
+    <ion-tab title="拿学分" icon-off="icon-school-def" icon-on="icon-school-sel" href="#/home/course">
+        <ion-nav-view name="home-course"></ion-nav-view>
+    </ion-tab>
+
+    <!--<ion-tab title="玩社区" icon-off="icon-fond-def" icon-on="icon-fond-sel" href="#/home/community">-->
+        <!--<ion-nav-view name="home-community"></ion-nav-view>-->
+    <!--</ion-tab>-->
+
+    <ion-tab title="充充电" icon-off="amend-learn-def" icon-on="amend-learn-sel" href="#/home/charging">
+        <ion-nav-view name="home-charging"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab ng-class="{true:'tab-red-point',false:''} [unReadMsg!=0 && unReadMsg !=undefined] " title="我的" icon-off="icon-me-def" icon-on="icon-me-sel" href="#/home/me">
+        <i class="tabs-red"></i>
+        <ion-nav-view name="home-me"></ion-nav-view>
+    </ion-tab>
+
+</ion-tabs>

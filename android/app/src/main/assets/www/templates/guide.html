@@ -1,0 +1,49 @@
+<ion-view hide-nav-bar="true" class="guide-wrap">
+        <ion-slide-box on-slide-changed="slideHasChanged($index)">
+
+            <ion-slide>
+                <div class="guide guide-2" ng-class="currentIndex==1 ? 'bg-tip' : '' ">
+                    <img class="ele-1" ng-class="currentIndex==1 ? 'anim1' : '' " src="images/p2-11.png" alt="">
+                    <img class="ele-2" ng-class="currentIndex==1 ? 'anim2' : '' " src="images/p2-22.png" alt="">
+                    <img class="ele-3" ng-class="currentIndex==1 ? 'anim3' : '' " src="images/p2-33.png" alt="">
+                    <img class="ele-4" ng-class="currentIndex==1 ? 'anim4' : '' " src="images/p2-4.png" alt="">
+                    <div class="text-wrap text-center">
+                        <img class="ele-5" ng-class="currentIndex==1 ? 'anim5' : '' " src="images/p2-text1.png" alt="">
+                        <img class="ele-6" ng-class="currentIndex==1 ? 'anim6' : '' " src="images/p2-text2.png" alt="">
+                    </div>
+                </div>
+            </ion-slide>
+
+            <ion-slide>
+                <div class="guide guide-3" ng-class="currentIndex==2 ? 'bg-tip' : '' ">
+                    <img class="ele-1" ng-class="currentIndex==2 ? 'anim1' : '' " src="images/p3-1.png" alt="">
+                    <img class="ele-2" ng-class="currentIndex==2 ? 'anim2' : '' " src="images/p3-2.png" alt="">
+                    <div class="text-wrap text-center">
+                        <img class="ele-5" ng-class="currentIndex==2 ? 'anim5' : '' " src="images/p3-text1.png" alt="">
+                        <img class="ele-6" ng-class="currentIndex==2 ? 'anim6' : '' " src="images/p3-text2.png" alt="">
+                    </div>
+                </div>
+            </ion-slide>
+
+            <ion-slide>
+                <div class="guide guide-4" ng-class="currentIndex==3 ? 'bg-tip' : '' ">
+                    <img class="ele-1" ng-class="currentIndex==3 ? 'anim1' : '' " src="images/p4-1.png" alt="">
+                    <img class="ele-2" ng-class="currentIndex==3 ? 'anim2' : '' " src="images/p4-2.png" alt="">
+                    <img class="ele-3" ng-class="currentIndex==3 ? 'anim3' : '' " src="images/p4-3.png" alt="">
+                    <img class="ele-4" ng-class="currentIndex==3 ? 'anim4' : '' " src="images/p4-4.png" alt="">
+                    <img class="ele-7" ng-class="currentIndex==3 ? 'anim7' : '' " src="images/p4-5.png" alt="">
+                    <div class="text-wrap text-center">
+                        <img class="ele-5" ng-class="currentIndex==3 ? 'anim5' : '' " src="images/p4-text1.png" alt="">
+                        <img class="ele-6" ng-class="currentIndex==3 ? 'anim6' : '' " src="images/p4-text2.png" alt="">
+                    </div>
+                    <a class="in-app"  ng-click="goCourse()">
+                        <img src="images/in.png" alt="">
+                    </a>
+                </div>
+            </ion-slide>
+
+        </ion-slide-box>
+
+</ion-view>
+
+

@@ -1,0 +1,82 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="me_addValidate_wrap" scroll="false">
+        <div class="goBack">
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1>添加认证信息</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 95%; margin-top: 0px;">
+
+            <header class="open_up_wrap">
+                <i></i>
+                <div>哇，世界上又多了一名爱学习的好青年！</div>
+                <p>赶快认证一下身份吧，学课程，修学分，付出就会有回报~</p>
+            </header>
+
+            <div class="con">
+                <form name="ValidatesForm">
+                    <div class="formWrap verify">
+                        <label class="item-input texts" ng-click="goSchool()">
+                            <span class="input-label input-sp icon-school input-icon"></span>
+                            <input readonly="readonly" type="text" placeholder="请选择您的学校" ng-model="schoolName" >
+                            <b class="fl_right ion-chevron-right"></b>
+                        </label>
+                        <label class="item-input texts">
+                            <span class="input-label input-sp icon-number input-icon" style="font-family: 'gxbadd';font-size:26px;"></span>
+                            <input type="text" name="schoolNo" placeholder="请填写你在本校的学号" ng-model="$addValidateModel.no">
+                            <!--<span class="error " ng-show="ValidatesForm.schoolNo.$error.required">不可为空</span>-->
+                        </label>
+                        <label class="item-input texts">
+                            <span class="input-label input-sp icon-userName input-icon"></span>
+                            <input type="text" name="name" placeholder="请输入你的真实姓名" ng-model="$addValidateModel.name">
+                            <!--<span class="error " ng-show="ValidatesForm.name.$error.required">不可为空</span>-->
+                        </label>
+                    </div>
+                    <button ng-if="!schoolName  || !$addValidateModel.no || !$addValidateModel.name" class="verify_submit" type="submit">提交认证</button>
+                    <button ng-if="schoolName && $addValidateModel.no && $addValidateModel.name" class="verify_sub" type="submit" ng-click="subValidate()">提交认证</button>
+                </form>
+            </div>
+        </ion-scroll>
+
+
+        <script id="my-modal.html" type="text/ng-template">
+            <div class="modal">
+                <ion-content class="{{schoolStyle}}" scroll="false" id="schoolContent">
+                    <div class="goBack">
+
+                        <h1>选择学校</h1>
+                        <span class="icon-closeBig" style="font-family: gxbIcon;right:0;font-size:25px;left:initial;" ng-click="closeModal()"></span>
+                    </div>
+
+                    <!--<div class="red">以下为高校邦平台的学校列表,请选择您要进入的学校</div>-->
+                    <div class="bar item-input-inset search_wrap">
+                        <label class="item-input-wrapper item_input_wrap">
+                            <i class="icon  ion-ios-search-strong placeholder-icon"></i>
+                            <input autofocus="true" type="text" id="searchSchool" ng-model="searchName" placeholder="输入学校名称" ng-change="redrawScroll()" required />
+                        </label>
+                    </div>
+                    <ion-scroll id="ionicScroll" delegate-handle="schoolScroll">
+                        <ul ng-show="searchName!=null&&searchName!=''&&(schoolsList|filter:searchName).length!=0">
+                            <li ng-repeat="school in schoolsList | filter:{name:searchName} |orderBy:order"  class="school_list">
+                                <!--<div class="item-divider school_divider" ng-if="!school.name">-->
+                                <!--<h2 name="{{school}}" id="{{school}}">{{school|uppercase}}</h2>-->
+                                <!--</div>-->
+                                <div class="item school_item" ng-click="selectThisSchool(school)" ng-if="school.name">
+                                    <h2>{{school.name}}</h2>
+                                </div>
+                            </li>
+                        </ul>
+                        <div ng-show="searchName==''||searchName==null" class="selectSchool">
+                            <img src="./images/nologin.png" alt="" />
+                            <p>请输入关键字，搜索并选择你的学校</p>
+                        </div>
+                        <div  ng-show="searchName!=''&&(schoolsList|filter:searchName).length==0" style="text-align: center;" class="no_learn-wrap">
+                            <img src="./images/nosearch.png" alt=""/>
+                            <p class="no_inter">未搜索到相应的学校，请重试。</p>
+                        </div>
+                    </ion-scroll>
+                </ion-content>
+            </div>
+        </script>
+
+    </ion-content>
+</ion-view>

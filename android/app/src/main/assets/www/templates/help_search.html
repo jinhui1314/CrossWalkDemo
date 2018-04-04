@@ -1,0 +1,32 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="search_help_wrap">
+        <div class="goBack" style="background: #1FB6FF;border-bottom:0;">
+            <i class="icon-search icon-search-course" style="width: 10px;left: 7%"></i>
+            <form>
+                <input class="proficients" type="search" placeholder="输入关键词" ng-model="search.searchName" ng-change="hideNoCourse()" style="left: 5%;width: 70%"/>
+            </form>
+            <em ng-click="goTome()">取消</em>
+            <!--<div class="cancel" ng-click="goTome()">取消</div>-->
+
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;">
+            <div class="courseWrap" ng-if="tab == 2">
+                <p class="title">共找到{{questionList.length}}个相关问题</p>
+                <div class="course" ng-repeat="question in questionList" ng-click="goAnswer(question.title,question.helpCenterBodyId)">
+                    {{question.title}}
+                </div>
+            </div>
+            <div ng-if="tab==1" class="no_course"><span>没有</span><span>“{{search.searchName}}</span><span>”相关问题</span></div>
+            <div class="search_record" ng-show="tab == 0 && !search.searchName && searchList.length>0">
+                <p>历史记录</p>
+                <ul>
+                    <li ng-repeat="s in searchList" ng-if="$index<5" ng-click="goSearch(s)">{{s}}</li>
+                </ul>
+                <span ng-click="emptyMessage()">清空搜索记录</span>
+            </div>
+            <div class="noContent" ng-show="tab == 0 && !search.searchName && searchList.length == 0">
+                暂无搜索记录
+            </div>
+        </ion-scroll>
+    </ion-content>
+</ion-view>

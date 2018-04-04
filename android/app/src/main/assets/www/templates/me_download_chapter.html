@@ -1,0 +1,24 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="me_download_chapter_wrap">
+        <div class="goBack">
+            <span class="icon_bar_back backs" ng-click="goBack()"></span>
+            <h1 style="color:#fff;width: 52%;margin:0 auto;">{{className}}</h1>
+            <em ng-click="deleteCon()" ng-if="chapterList.length > 0">{{editAndCancel}}</em>
+        </div>
+        <ion-scroll style="width: 100%;height:{{changeHeight()}};">
+            <div class="download_chapter" ng-click="goCourse()" ng-if="!showMore"><i><b class="ion-ios-plus-empty"></b></i>下载更多章节</div>
+            <div class="download_chapter_content">
+                <div ng-repeat="chapter in chapterList" class="chapter_wrap">
+                    <p><i ng-if="deleteBtn" ng-init="chapter.checked = false" ng-class="{true:'ion-android-checkbox ion-android-icon',false:'ion-android-checkbox-outline-blank ion-android-checkbox-icon'}[chapter.checked]" ng-click="checkedIcon(chapter)"></i>{{chapter.unitName}}</p>
+                    <ul ng-repeat="list in chapter.videoModels">
+                        <li ng-click="getChecked(list,chapter)" ng-class="list.learnState == 2?'finish':''"><i ng-if="deleteBtn" ng-init="list.check = false" ng-class="{true:'ion-ios-checkmark ion-ios-checkmark-icon',false:''}[list.check]"></i>第{{list.chapterIndex}}讲</li>
+                    </ul>
+                </div>
+            </div>
+        </ion-scroll>
+        <ul class="delete_button_wrap" ng-if="deleteBtn">
+            <li ng-click="selectAll()">{{allSelectOrNot}}</li>
+            <li ng-click="deleteAll(num)">删除（{{num}}）</li>
+        </ul>
+    </ion-content>
+</ion-view>

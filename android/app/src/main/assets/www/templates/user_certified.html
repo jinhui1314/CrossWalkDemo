@@ -1,0 +1,47 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="user_certified-wrap" scroll="false">
+        <div class="goBack">
+            <h1>填写认证信息</h1>
+            <em class="icon-service register_icon_qq" ng-click="customerService()"></em>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;">
+            <header class="open_up_wrap">
+                <i></i>
+                <div>哇，世界上又多了一名爱学习的好青年！</div>
+                <p>赶快认证一下身份吧，学课程，修学分，付出就会有回报~</p>
+            </header>
+
+            <div class="con">
+                <form name="studentno1Form" ng-submit="goToAuth()" novalidate>
+                    <div class="formWrap verify">
+                        <label class="item-input texts" ng-click="goSchool()">
+                            <span class="input-label input-sp icon-school input-icon"></span>
+                            <input type="text" placeholder="请选择学校" ng-model="$authModel.schoolName"/>
+                            <span class="ion-chevron-right login_arrow"></span>
+                        </label>
+                        <label class="item-input texts">
+                            <span class="input-label input-sp icon-number input-icon" style="font-family: 'gxbadd';font-size: 26px;"></span>
+                            <input type="text" name="no" placeholder="请填写你在本校的学号" ng-model="$authModel.no" required >
+                        </label>
+                        <label class="item-input texts">
+                            <span class="input-label input-sp icon-userName input-icon"></span>
+                            <input type="text" name="name" placeholder="请输入你的真实姓名" ng-model="$authModel.name" required >
+                        </label>
+                    </div>
+                    <button class="verify_sub" type="submit" >提交认证</button>
+                    <p ng-click="goLearn()" style="text-align:center;color:#9DA9B3;">稍后再说</p>
+                </form>
+            </div>
+        </ion-scroll>
+        <script id="user-modal.html" type="text/ng-template">
+            <div class="modal">
+                <ion-header-bar>
+                    <h1 class="title">我的模型标题</h1>
+                </ion-header-bar>
+                <ion-content>
+                    Hello!
+                </ion-content>
+            </div>
+        </script>
+    </ion-content>
+</ion-view>

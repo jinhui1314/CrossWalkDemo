@@ -1,0 +1,52 @@
+<ion-view hide-nav-bar="true">
+  <ion-content class="me_download_wrap" scroll="false">
+    <div class="goBack">
+      <span class="icon_bar_back backs" ng-click="goBack()"></span>
+      <h1 style="color:#fff;">下载管理</h1>
+      <em ng-click="deleteCon()" ng-if="tab == 1">{{editAndCancel}}</em>
+    </div>
+    <div class="no_download" ng-if="tab==0">
+      <img src="images/nodownload.png" alt=""/>
+      <p>提前下载好视频，随时随地拿学分</p>
+      <span>没有网络也能学，学习进度同样有效</span>
+      <span>如遇进度有误，重启APP即可</span>
+    </div>
+    <ion-scroll style="width: 100%;height: 90%;">
+      <div class="download_status" ng-click="goDownloading()">
+        <span class="fl_left batch_icon"></span>
+        <div class="fl_left download_num">
+          <p>正在下载（{{allTaskNum}}）</p>
+          <span ng-show="allTaskNum == 0">提前下载好视频，随时随地拿学分</span>
+          <div ng-show="allTaskNum > 0" style="color:#ff4c4c;line-height:18px;">剩余{{allTaskNum}}个任务<span ng-show="netSpeed">（当前网速：{{netSpeed}}）</span></div>
+          <!--<div class="progress" ng-show="allTaskNum > 0">-->
+            <!--<div class="progress-bar progress-bar-info progress-bar-striped active" style="width: {{getWidth()}}%;"></div>-->
+          <!--</div>-->
+          <!--<span class="memory" ng-show="allTaskNum > 0">{{currentFileSize}}M / {{totalFileSize}}M</span>-->
+        </div>
+        <span class="fl_right ion-ios-arrow-right downloading_icon"></span>
+      </div>
+      <div class="download_content" ng-if="tab == 1">
+        <ion-list show-delete="flag.showDelete">
+          <ion-item ng-repeat="privateNote in privateNoteList" ng-click="downloadChapter(privateNote.classId)">
+            <ion-delete-button ng-init="privateNote.checked = false;" ng-class="{true: 'ion-selected', false: 'downloadOutline'}[privateNote.checked]" ng-click="noteChecked(privateNote);"></ion-delete-button>
+            <div class="course-card">
+              <div class="thumbnail">
+                <img src="{{privateNote.classCover}}" err-src="./images/course_def.png" alt=""/>
+              </div>
+              <h2><span class="creditCourse" ng-if="privateNote.classType == '20' && !isPyTenant()">学分课</span><span class="exam" ng-show="privateNote.examNum != 0">内含考试</span>{{privateNote.className}}</h2>
+              <div class="other-info">
+                <div class="fl_left">共{{privateNote.videoNumber}}讲</div>
+                <div class="fl_left downloadChapter">已下载{{privateNote.finishedTasksNum}}讲</div>
+              </div>
+            </div>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-scroll>
+    <div class="free" ng-if="!deleteBtn"> 已下载{{finishedFileSize}}课程 / 可用空间{{availableSize}}</div>
+    <ul class="delete_button_wrap" ng-if="deleteBtn">
+      <li ng-click="selectAll()">{{allSelectOrNot}}</li>
+      <li ng-click="deleteAll(num)">删除（{{num}}）</li>
+    </ul>
+  </ion-content>
+</ion-view>

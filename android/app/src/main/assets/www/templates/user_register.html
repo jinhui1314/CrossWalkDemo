@@ -1,0 +1,31 @@
+
+<ion-view hide-nav-bar="true">
+  <ion-content class="user_register_wrap" scroll="false">
+
+    <div class="goBack">
+      <span class="icon_bar_back backs" ng-click="goTome()"></span>
+      <h1>注册（1/3）</h1>
+      <em class="icon-service register_icon_qq" ng-click="customerService()"></em>
+    </div>
+    <ion-scroll style="width: 100%;height: 90%;">
+      <div class="register_title">
+        如需邮箱注册,请用电脑进入高校邦官网完成(gaoxiaobang.com)
+      </div>
+      <div class="bindForget_wrap">
+        <form name="register_name" ng-submit="goGetCode()" method="get" novalidate  >
+          <div class="formWrap tabulation">
+            <label class="item-input texts">
+              <span class="input-label input-sp">手机</span>
+              <input type="text" name="mobile" placeholder="请输入11位手机号" ng-model="$regModel.mobile" required  >
+              <!--<span class="error" ng-show="register_name.mobile.$error.required" >不可为空</span>-->
+              <!--<span class="error" ng-show="register_name.input.$error">请填写正确的手机格式</span>--><!--ng-pattern="/^0?1[3|4|5|8][0-9]\d{8}$/"-->
+            </label>
+          </div>
+          <button class="next_step" type="submit" >获取验证码</button>
+          <p ng-click="agreement()" class="agr">注册代表您同意<a>《高校邦用户协议》</a></p>
+        </form>
+      </div>
+    </ion-scroll>
+
+  </ion-content>
+</ion-view>

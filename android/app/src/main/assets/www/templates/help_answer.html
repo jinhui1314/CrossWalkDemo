@@ -1,0 +1,16 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="help_answer_wrap" scroll="false">
+        <div class="goBack" style="background: #1FB6FF;border-bottom:0;">
+
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1 style="color:#fff;width: 60%;margin:0 auto;">{{answer.navname}}</h1>
+            <i class="icon_search_wrap" style="width: 40px;height: 40px;display: inline-block;" ng-click="searchHelp()"><i class="icon-search" style="font-family: 'gxbIcon';"></i></i>
+        </div>
+        <ion-scroll style="width: 100%;height:90%;">
+            <h2>{{answer.title}}</h2>
+            <div ng-bind-html="answer.body" class="text_content"></div>
+
+        </ion-scroll>
+
+    </ion-content>
+</ion-view>

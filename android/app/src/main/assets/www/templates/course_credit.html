@@ -1,0 +1,114 @@
+<ion-view hide-nav-bar="true" class="course_credit_wrap">
+    <ion-content scroll="false">
+        <div class="goBack" style="background: #1FB6FF;">
+            <span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1 style="color:#fff;">全部课程</h1>
+        </div>
+        <div class="search_wrap">
+            <form>
+                <i ng-if="searchIcon == true" class="ion-ios-search-strong"></i>
+                <input type="search" ng-change="searchChange(search.searchName)" ng-model="search.searchName" placeholder="输入课程关键字搜索"/>
+            </form>
+        </div>
+        <ul class="nav_wrap">
+            <li>筛选：</li>
+            <li ng-click="getAll()"><span ng-class="tab == 0?'active':''">全部</span></li>
+            <li ng-click="getDoing()"><span ng-class="tab == 1?'active':''">正在进行</span></li>
+            <li ng-click="getWill()"><span ng-class="tab == 2?'active':''">未开始</span></li>
+            <li ng-click="getEnd()"><span ng-class="tab == 3?'active':''">已结束</span></li>
+        </ul>
+        <ion-scroll style="width: 100%;height:{{scrollHeight()}};" on-scroll="scrollHandle1()" delegate-handle="creditScroll">
+            <div ng-if="show == true">
+                <ul class="courseList" ng-show="tab == 0" >
+                    <li ng-repeat="item in courseList track by $index">
+                        <div class="schoolCourseCard" ng-click="courseIntro(item.id)">
+                            <div class="pic" style="background: url({{item.cache}}) no-repeat center center;background-size: cover;)"></div>
+                            <p class="title">{{item.name}}</p>
+                            <div class="footer">
+                                <div ng-repeat="teacher in item.teachers">
+                                    <span class="fl_left name" ng-if="$index<1">{{teacher.teacherName}}</span>
+                                    <!--<span class="fl_left name" ng-if="item.teachers.length>=2&&item.teachers.length==($index+1)">...</span>-->
+                                </div>
+                                <span class="fl_right state" ng-show="item.statusFlag=='1'">正在进行</span>
+                                <span class="fl_right start" ng-show="item.statusFlag=='2'">未开始</span>
+                                <span class="fl_right end" ng-show="item.statusFlag=='0'">已结课</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="courseList" ng-show="tab == 1">
+                    <li ng-repeat="isGoing in isGoingList track by $index">
+                        <div class="schoolCourseCard" ng-click="courseIntro(isGoing.id)">
+                            <div class="pic" style="background: url({{isGoing.cache}}) no-repeat center center;background-size: cover;)"></div>
+                            <p class="title">{{isGoing.name}}</p>
+                            <div class="footer">
+                                <div ng-repeat="teacher in isGoing.teachers">
+                                    <span class="fl_left name" ng-if="$index<1">{{teacher.teacherName}}</span>
+                                    <!--<span class="fl_left name" ng-if="item.teachers.length>=2&&item.teachers.length==($index+1)">...</span>-->
+                                </div>
+                                <span class="fl_right state" ng-show="isGoing.statusFlag=='1'">正在进行</span>
+                                <span class="fl_right start" ng-show="isGoing.statusFlag=='2'">未开始</span>
+                                <span class="fl_right end" ng-show="isGoing.statusFlag=='0'">已结课</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul  class="courseList" ng-show="tab == 2">
+                    <li ng-repeat="willStart in willStartList track by $index">
+                        <div class="schoolCourseCard" ng-click="courseIntro(willStart.id)">
+                            <div class="pic" style="background: url({{willStart.cache}}) no-repeat center center;background-size: cover;)"></div>
+                            <p class="title">{{willStart.name}}</p>
+                            <div class="footer">
+                                <div ng-repeat="teacher in willStart.teachers">
+                                    <span class="fl_left name" ng-if="$index<1">{{teacher.teacherName}}</span>
+                                    <!--<span class="fl_left name" ng-if="item.teachers.length>=2&&item.teachers.length==($index+1)">...</span>-->
+                                </div>
+                                <span class="fl_right state" ng-show="willStart.statusFlag=='1'">正在进行</span>
+                                <span class="fl_right start" ng-show="willStart.statusFlag=='2'">未开始</span>
+                                <span class="fl_right end" ng-show="willStart.statusFlag=='0'">已结课</span>
+                            </div>
+                        </div>
+
+                    </li>
+                </ul>
+                <ul class="courseList" ng-show="tab == 3">
+                    <li ng-repeat="hasEnd in hasEndList track by $index">
+                        <div class="schoolCourseCard" ng-click="courseIntro(hasEnd.id)">
+                            <div class="pic" style="background: url({{hasEnd.cache}}) no-repeat center center;background-size: cover;)"></div>
+                            <p class="title">{{hasEnd.name}}</p>
+                            <div class="footer">
+                                <div ng-repeat="teacher in hasEnd.teachers">
+                                    <span class="fl_left name" ng-if="$index<1">{{teacher.teacherName}}</span>
+                                    <!--<span class="fl_left name" ng-if="item.teachers.length>=2&&item.teachers.length==($index+1)">...</span>-->
+                                </div>
+                                <span class="fl_right state" ng-show="hasEnd.statusFlag=='1'">正在进行</span>
+                                <span class="fl_right start" ng-show="hasEnd.statusFlag=='2'">未开始</span>
+                                <span class="fl_right end" ng-show="hasEnd.statusFlag=='0'">已结课</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div ng-if="tab == 1&&going == 1" class="no_learn-wrap" style="width: 100%;margin-top:20px;">
+                    <img src="./images/noCourse.png" alt=""/>
+                    <p class="no_inter">还没有课程哦</p>
+                </div>
+
+                <div ng-if="tab == 2&&will == 1" class="no_learn-wrap" style="width: 100%;margin-top:20px;">
+                    <img src="./images/noCourse.png" alt=""/>
+                    <p class="no_inter">还没有课程哦</p>
+                </div>
+
+                <div ng-if="tab == 3&&ends == 1" class="no_learn-wrap" style="width: 100%;margin-top:20px;">
+                    <img src="./images/noCourse.png" alt=""/>
+                    <p class="no_inter">还没有课程哦</p>
+                </div>
+            </div>
+            <div ng-if="show == false" style="text-align: center;" class="no_learn-wrap">
+                <img src="./images/nosearch.png" alt=""/>
+                <p class="no_inter">未搜索到相应的课程，请重试。</p>
+            </div>
+            <network ng-show="networkStates == 'none'&&accessToken&&currentObj.btnIsShow !=1"></network>
+            <loading ng-show="currentObj.btnIsShow==1&&accessToken"></loading>
+        </ion-scroll>
+    </ion-content>
+</ion-view>

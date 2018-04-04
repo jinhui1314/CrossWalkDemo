@@ -1,0 +1,25 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="me_message_wrap" scroll="false">
+        <div class="goBack">
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1>消息中心</h1>
+        </div>
+        <div ng-if="tab==1" class="no_learn-wrap no_coll_wrap">
+            <img src="./images/noMessage.png" alt=""/>
+            <p class="no_inter">还没有消息哦</p>
+        </div>
+        <ion-scroll style="height: 90%;width: 100%;margin-top:0;" ng-if="tab==0" delegate-handle="mainScroll" on-scroll="scrollHandle()">
+            <div style="background: #fff;">
+                <div ng-repeat="mess in message" ng-click="link(mess)">
+                    <div class="not_browse">
+                        <div class="headline"><span class="school_notice" ng-if="mess.messageType == 'TenantAnnouncement'">学校公告</span><span class="course_notice" ng-if="mess.messageType != 'TenantAnnouncement'">课程公告</span>{{mess.title}}</div>
+                        <i class="ion-ios-arrow-forward"><b ng-if="mess.isRead =='0'"></b></i>
+                        <p class="time">{{mess.createdAt}}</p>
+                    </div>
+                </div>
+                <loading ng-show="showMoreBtn==1"></loading>
+            </div>
+        </ion-scroll>
+
+    </ion-content>
+</ion-view>

@@ -1,0 +1,150 @@
+<ion-view hide-nav-bar="true">
+  <ion-header-bar align-title="left" class="intro-title" ng-show="hideImage==1">
+    <div class="buttons">
+      <button class="button button-clear icon_bar_back" ng-click="goBacks()"></button>
+    </div>
+    <h1 class="title" style="text-align: center;">课程详情</h1>
+    <div class="intro-nav" ng-show="showNav==1">
+      <ul class="nav">
+        <li ng-class="tab == 0?'cur':''" ng-click="showIntro()">课程简介<span ng-class="tab == 0?'active':''"></span></li>
+        <li ng-class="tab == 1?'cur':''" ng-click="showEcharts()">成绩标准<span ng-class="tab == 1?'active':''"></span></li>
+        <li ng-class="tab == 2?'cur':''" ng-click="showChapter()">章节目录<span ng-class="tab == 2?'active':''"></span></li>
+      </ul>
+    </div>
+
+  </ion-header-bar>
+
+  <ion-content class="course-intro" on-scroll="scrollHandle()" delegate-handle="scrollLayer">
+
+      <div class="top-box">
+        <div class="{{introduceStyle}}">
+          <div class="imageMask"  id="introImg" style="opacity:0"></div>
+          <div style="background-image:url({{$courseIntro.cache}});background-size: cover;background-position: center center;" class="course-intro-img"></div>
+
+        </div>
+      </div>
+
+      <ul class="nav" ng-show="showNav == 0">
+        <li ng-class="tab == 0?'cur':''" ng-click="showIntro()">课程简介<span ng-class="tab == 0?'active':''"></span></li>
+        <li ng-class="tab == 1?'cur':''" ng-click="showEcharts()">成绩标准<span ng-class="tab == 1?'active':''"></span></li>
+        <li ng-class="tab == 2?'cur':''" ng-click="showChapter()">章节目录<span ng-class="tab == 2?'active':''"></span></li>
+      </ul>
+
+      <ul class="infoNav">
+        <li ng-if="tab == 0">
+            <div class="title">
+              <h2><span class="credit" ng-if="$courseIntro.type == '20' && !isPyTenant(assessmentData&&assessmentData.tenantId||null)">学分课</span><span class="exam" ng-if="$courseIntro.examNum != '0'">内含考试</span>{{$courseIntro.name}}</h2>
+              <div class="height01">
+                <span class="type" ng-if="$courseIntro.type=='20'" ng-bind-html="$courseIntro.creditScore | scoreTextFilter:assessmentData"></span>
+                <span class="enrollment">{{$courseIntro.enrollment}}人学习</span>
+                <span class="status">{{$courseIntro.status}}</span>
+              </div>
+            </div>
+          <div class="bg_box">
+          </div>
+
+
+            <div class="margin-box">
+              <dl>
+                <dt>课程时间</dt>
+                <dd class="has-padding">{{$courseIntro.startAt}} &nbsp;&nbsp;至&nbsp;&nbsp; {{$courseIntro.concludeAt}}</dd>
+              </dl>
+              <dl>
+                <dt>课程简介</dt>
+                <dd ng-show="$courseIntro.intro == null">
+                  <div class="no_evaluation">暂无</div>
+                </dd>
+                <dd ng-show="$courseIntro.intro != null" >
+                  <div class="detail intro-detail"  ng-bind-html="$courseIntro.intro" id="introDetail"></div>
+                </dd>
+              </dl>
+              <dl class="no-border">
+                <dt style="padding-bottom: 10px;">讲师简介</dt>
+                <dd class="has-padding">
+                  <ul style="overflow: scroll;">
+                    <li style="padding:0 0 22px 0;width: 100%;" ng-repeat="teacher in $courseIntro.teachers">
+                      <img src="{{teacher.avatar}}" style="border-radius: 25px"/>
+                      <div class="teacher-name">{{teacher.teacherName}}</div>
+                      <div class="teacher-intro">{{teacher.title}}</div>
+                    </li>
+                  </ul>
+
+                </dd>
+              </dl>
+            </div>
+        </li>
+        <li ng-if="tab ==1">
+            <div class="assessment_wrap">
+              <p class="assessment_title">本课成绩标准:</p>
+              <p class="assessment_prompt">最终成绩=线上成绩*{{assessmentData.onlinePercent}}%+线下成绩*{{assessmentData.offlinePercent}}%</p>
+              <div class="proportion">
+                <h3>1、线上成绩占比{{assessmentData.onlinePercent}}%，得分比重如下：</h3>
+                <div class="echarts">
+                  <i class="fl_left" id="{{echarts_classId}}"></i>
+                  <div class="fl_right number">
+                    <ul>
+                      <li> <em style="background-color:#52B0EB "></em><span>视频：{{assessmentData.videoPercent}}%</span></li>
+                      <li> <em style="background-color:#EC7E7B "></em><span>作业：{{assessmentData.assignmentPercent}}%</span></li>
+                      <li> <em style="background-color:#76BD76 "></em><span>讨论：{{assessmentData.topicPercent}}%</span></li>
+                      <li> <em style="background-color:#689FE0 "></em><span>测验：{{assessmentData.quizPercent}}%</span></li>
+                      <li> <em style="background-color:#FBC61B "></em><span>考试：{{assessmentData.examPercent||0}}%</span></li>
+                    </ul>
+                  </div>
+                </div>
+                <span style="font-size: 12px;display: inline-block;margin-bottom: 26px;">线上成绩由视频、作业、测验、讨论、考试几部分组成</span>
+                <h4>2、线下成绩：占比{{assessmentData.offlinePercent}}%</h4>
+                <div class="assessment_prompt" ng-if="assessmentData.offlinePercent == 0">本课程没有安排线下得分环节。</div>
+              </div>
+            </div>
+        </li>
+        <li ng-if="tab == 2" class="chapterWrap">
+          <ul class="chapter">
+            <li ng-repeat="list in $list track by $index">
+              <div class="chapter-title">{{list.title}}</div>
+              <ul class="section">
+                <li ng-repeat="item in list.itemList track by $index">
+                  <div class="section-title">{{item.title}}</div>
+                  <ul class="lists">
+                    <li ng-repeat="chapter in item.chapterList track by $index">{{chapter.title}}</li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+
+      </ul>
+  </ion-content>
+  <ion-footer-bar align-title="left" class="bar-assertive">
+
+    <button class="bottomBtn" ng-class="learnBtn.class" ng-click="startLearn($courseIntro.classId,type)" style="font-size: 16px">
+    {{learnBtn.text}}
+    </button>
+  </ion-footer-bar>
+
+  <div class="fixBtn {{introduceStyle}}" ng-hide="hideImage==1">
+    <span class="back ion-ios-arrow-left" ng-click="goBacks()"></span>
+  </div>
+
+
+  <div class="course_certification" style="display: {{showBox}}">
+    <div class="shadow" >
+    </div>
+    <div class="contentBox">
+      <div class="title">选课确认</div>
+      <div class="content">
+        <p class="course_name">{{$courseIntro.name}}</p>
+        <p class="course_teacher"><span>{{$courseIntro.teachers[0].teacherName}}</span><span ng-if="$courseIntro.creditScore">|</span> <span ng-if="$courseIntro.creditScore"  ng-bind-html="$courseIntro.creditScore | scoreTextFilter:assessmentData"></span></p>
+        <div class="course_time">
+          <p>{{$courseIntro.startAt}} （开始）</p>
+          <p>{{$courseIntro.concludeAt}} （结束）</p>
+        </div>
+        <div class="course_btn">
+          <span class="course_cancel" ng-click="hideBox()">取消选课</span>
+          <span class="course_confirm" ng-click="confirmStudy()">确认选课</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ion-view>

@@ -1,0 +1,343 @@
+<ion-view hide-nav-bar="true">
+
+    <ion-content class="course_detail_wrap" scroll="false">
+
+        <div class="goBack" style="background: #1FB6FF;">
+            <span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1 style="color:#fff;width: 52%;margin:0 auto;">{{intro.name}}</h1>
+            <p class="detail_download" ng-click="bacthDownload()"><span class="batch_icon"></span></p>
+            <p class="detail_course" ng-click="goIntro()">
+                <span class="intro_icon"></span>
+            </p>
+        </div>
+        <ul class="detail-switch noLive" ng-show="types !='Self'">
+            <li class="fl_left" ng-click="showAnnouncement($event)"><span ng-class="tab == 0?'activese':''">公告</span></li>
+            <li class="li01 fl_left" ng-click="showChapters()"><span ng-class="tab == 1?'activese':''">章节</span></li>
+            <li class="li02 fl_left" ng-click="showDiscuss()"><span ng-class="tab == 2?'activese':''">讨论区</span></li>
+            <li class="li04 fl_right" ng-click="showScoreAnalysis()"><span ng-class="tab == 3?'activese':''">成绩分析</span></li>
+        </ul>
+        <ion-scroll ng-if="tab == 0" delegate-handle="announceLayer" style="width: 100%;height: 85%;margin-top:0;">
+            <div class="detail_notice" >
+                <div>
+                    <div class="detailCard" ng-repeat="announce in announcement" id="{{announce.id}}" ng-click="announceDetail(announce.id)">
+
+                        <h1 class="tit"><i class="icon-notice active"></i>{{announce.title}}</h1>
+
+                        <p class="time">{{announce.publishedAt}}</p>
+
+                        <div class="content" ng-bind-html="announce.content"></div>
+                        <em class="icon-go"></em>
+                    </div>
+                </div>
+
+            </div>
+        </ion-scroll>
+        <ion-scroll ng-if="tab == 1" delegate-handle="myChapters"  style="width:100%;height: 85%;margin-top:0;" >
+            <ul class="navigation">
+
+                <li class="chapters" ng-repeat="unit in units track by unit.unitId" >
+
+                    <div class="chapter" ng-click="toast(unit.unlockedTime)" ng-if="unit.canOpen=='false'&&intro.teachMode=='20'">
+                        <p>{{unit.title}}<i class="open fl_right" ng-class="learnChapter.unitId == unit.unitId?'ion-ios-arrow-up':'ion-ios-arrow-down'"></i><span style="margin-right:4%;font-size:13px;color:#6E7880;" class="fl_right" ng-if="!unit.status">已完成</span></p>
+                    </div>
+
+                    <div class="chapter" id="{{unit.unitId}}" ng-click="isLearn($index,unit.unitId)" ng-if="intro.teachMode=='10'|| intro.teachMode=='30' || (unit.canOpen=='true'&&intro.teachMode=='20')">
+                        <p>{{unit.title}}<i class="open fl_right" ng-class="learnChapter.unitId == unit.unitId?'ion-ios-arrow-up':'ion-ios-arrow-down'"></i><span style="margin-right:4%;font-size:13px;color:#6E7880;" class="fl_right" ng-if="!unit.status">已完成</span></p>
+                    </div>
+
+
+                    <ul class="section" ng-hide="(learnChapter.unitId != unit.unitId)||(unit.canOpen=='false'&&intro.teachMode=='20')">
+                        <li ng-repeat="item in unit.itemList track by item.itemId">
+                            <p class="section" style="color:#9DA9B3;font-size:10px;">{{item.title}}</p>
+                            <ul class="section-list">
+                                <li ng-repeat="chapter in item.chapterList track by chapter.chapterId" ng-class="(chapter.contentType == 'Page' || chapter.contentType == 'Courseware' || chapter.contentType=='Video'||chapter.contentType=='Quiz'||chapter.contentType == 'Topic' || chapter.contentType == 'Programming'||chapter.contentType=='WebCast'||(chapter.contentType =='Assignment' && chapter.assignment.isPeerReview=='false' && chapter.assignment.subType!='programming' && chapter.assignment.subType != 'programmingAutomaticGrading'))?'':'undeveloped'">
+                                    <span class="fl_left triangle icon-end finished" style="font-size:24px;margin-top:18px;font-family: 'gxbIcon';" ng-show="chapter.learnStatus=='2'">
+                                    </span>
+                                    <span class="fl_left triangle icon-doing finished" style="font-size:24px;margin-top:18px;font-family: 'gxbIcon';" ng-show="chapter.learnStatus=='1'">
+                                    </span>
+
+                                    <span class="fl_left triangle" ng-show="chapter.learnStatus=='0'">
+                                        <span class="icon-start" style="font-size:24px;color:#D8E1F0;font-family: 'gxbIcon';"></span>
+                                    </span>
+
+                                    <p class="text fl_left"  ng-click="goChapter(chapter)">{{chapter.title}}</p>
+                                    <!--通过状态判断显示什么样的图标 -->
+                                    <span class="download-icon-wrapper" ng-if="chapter.contentType=='Video'">
+                                        <!--等待 -->
+                                      <span class="chapterDown" ng-click="pause(chapter)" ng-show="chapter.state=='waiting'">
+                                          <span class="chapter-wait"></span>
+                                          <svg width="20" height="20" class="svg-position" >
+                                              <circle id="c5" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#CFD7E6" fill="none" ></circle>
+                                              <circle id="c6" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#52CC66"  fill="none" stroke-dasharray="{{chapter.processStart}} {{chapter.processEnd}}" ng-show="chapter.processStart>0"></circle>
+                                              <!--<circle id="c3" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#52CC66" fill="none" stroke-dasharray="12.405717105876958 37.85976535155973"></circle>-->
+                                          </svg>
+                                      </span>
+                                        <!-- 寻找资源 -->
+                                      <span class="chapterDown" ng-show="chapter.state=='searching'">
+                                          <span class="ball-clip-rotate"></span>
+                                      </span>
+                                        <!--完成-->
+                                      <span class="chapterDown finished" ng-show="chapter.state=='finished'">
+                                          <i class="icon-down-complete chapter-complete"></i>
+                                      </span>
+                                      <span class="chapterDown" ng-show="chapter.state=='wrong'" ng-click="resume(chapter)">
+                                          <i class="icon-wrongs chapter-icon-wrong"></i>
+                                      </span>
+
+
+                                      <span class="chapterDown noBefore" ng-show="chapter.state=='pause'" ng-click="resume(chapter)">
+                                          <span class="chapter-pause"></span>
+                                            <svg width="20" height="20" class="svg-position" >
+                                                <circle id="c1" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#CFD7E6" fill="none" ></circle>
+                                                <circle id="c2" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#52CC66"  fill="none" stroke-dasharray="{{chapter.processStart}} {{chapter.processEnd}}" ng-show="chapter.processStart>0"></circle>
+                                                <!--<circle id="c3" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#52CC66" fill="none" stroke-dasharray="12.405717105876958 37.85976535155973"></circle>-->
+                                            </svg>
+                                      </span>
+
+                                        <!--默认-->
+                                      <span class="chapterDown" ng-show="chapter.state=='default'" ng-click="download(chapter,item,unit)">
+                                          <i class="icon-down"></i>
+
+                                      </span>
+
+                                        <!--下载中-->
+                                      <span class="chapterDown noBefore" ng-click="pause(chapter)" ng-show="chapter.state=='downloading'">
+                                          <!--<span class="chapterDown noBefore" ng-click="pause(chapter.chapterId)" >-->
+                                          <span class="ing"></span>
+                                          <svg width="20" height="20" class="svg-position">
+                                              <circle id="c3" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#CFD7E6" fill="none" ></circle>
+                                            <circle id="c4" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#52CC66"  fill="none" stroke-dasharray="{{chapter.processStart}} {{chapter.processEnd}}" ng-show="chapter.processStart>0"></circle>
+                                              <!--如果进度为o的话，stroke-dasharray=“0 100”-->
+                                              <!--<circle id="c3" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#52CC66" fill="none" stroke-dasharray="45.23893421169302 11.309733552923255"></circle>-->
+                                        </svg>
+
+                                      </span>
+
+                                    </span>
+                                    <div class="webcast-status" ng-if="chapter.contentType=='WebCast'">
+                                        <span ng-class="chapter.webcastClass">{{chapter.webcastStatus}}</span>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="exam_outer">
+                <div class="exam_wrap" ng-if="exam == 1" ng-repeat="(index,exams) in examList" ng-click="goEXam()">
+                    <p class="fl_left examName">{{exams.exam_name}}</p>
+                    <div class="fl_left timeWrap" ng-if="exams.serverTime<exams.start_at">
+                        <p class="fl_left time">({{exams.startAt}} 开考)</p>
+                        <span class="fl_right status01">未开始</span>
+                    </div>
+                    <div class="fl_left timeWrap" ng-if="(exams.serverTime>=exams.start_at) && (exams.serverTime<=exams.end_at)">
+                        <p class="fl_left time">({{exams.endAt}} 截止)</p>
+                        <span class="fl_right status02">进行中...</span>
+                    </div>
+                    <div class="fl_left timeWrap" ng-if="exams.serverTime<exams.pubAt&&exams.serverTime>exams.end_at&&!scoreExam[index].subjectivePercent&&!exams.score">
+                        <p class="fl_left time">({{exams.pubAt}} 成绩公布)</p>
+                        <span class="fl_right">已截止</span>
+                    </div>
+                    <div class="fl_left timeWrap" ng-if="exams.serverTime>exams.end_at&&exams.serverTime<exams.pubAt&&scoreExam[index].subjectivePercent&&!exams.score">
+                        <p class="fl_left time">(成绩：老师批阅中...)</p>
+                        <span class="fl_right">已截止</span>
+                    </div>
+                    <div class="fl_left timeWrap" ng-if="exams.serverTime>exams.publishAt">
+                        <p class="fl_left time">(成绩：{{exams.score?exams.score:0}}分)</p>
+                        <span class="fl_right">已截止</span>
+                    </div>
+                </div>
+            </div>
+        </ion-scroll>
+        <ion-scroll ng-if="tab == 2" style="width:100%;height: 85%;margin-top:0;" delegate-handle="myTopicScroll" on-scroll="scrollHandle()">
+            <div class="topicLayer" >
+                <div class="classification-bar titleBar">{{currentForum.name}}<span class="openBtn ion-ios-arrow-down" ng-click="openForums()"></span></div>
+                <ul class="topic-wrapper">
+                    <li ng-repeat="topic in topicList"  ng-click="goTopic(topic.topicId,topic.forumId==scoreTopic?1:0)" style="border-bottom: 0;">
+                        <div class="topicCard" style="padding-bottom:0;margin-bottom: 10px;">
+                            <div class="topic-title"><span ng-if="topic.forumId==scoreTopic">得分</span>{{topic.title}}</div>
+                            <div style="margin-bottom: 25px;" class="topic-summary"  ng-bind="topic.body"></div>
+                            <div class="topic-others">
+                                <div class="topic-author">
+                                    <i ng-class="topic.userName?'topic_name':''">{{topic.userName}}</i>
+                                    <span ng-show="topic.userType!='StudentEnrollment'" class="teacher">老师</span>
+                                </div>
+                                <div class="topic-reply">
+                                    <span>{{topic.postedAt}}</span>
+                                    <span class="icons-topic">{{topic.postsCount}}人回复</span>
+                                </div>
+                            </div>
+                            <div class="topic-origin" ng-show="topic.chapterTitle">来自 {{topic.chapterTitle}}</div>
+                        </div>
+                    </li>
+                </ul>
+                <div ng-if="topicList.length==0" class="notopic">还没有讨论</div>
+                <loading ng-show="hasMore==1"></loading>
+
+            </div>
+        </ion-scroll>
+        <ion-scroll ng-if="tab == 3" style="width: 100%;height: 85%;" on-scroll="scrollHandle1()" delegate-handle="scoreScroll">
+            <div class="score_analysis_wrap">
+                <div class="progress">
+                    <ul>
+                        <li><p>当前成绩：</p><span>{{scoreItem.integer || 0}}.<i>{{scoreItem.decimal || "00"}}</i></span></li>
+                        <li><p>当前学习进度：</p><span>{{scoreItem.learnRating || 0}}<i>%</i></span></li>
+                    </ul>
+                    <p class="update">数据每天24点更新</p>
+                </div>
+                <div class="content">
+                    <div class="score_title">
+                        <p class="data">详细数据：</p>
+                        <span ng-click="showRule()"><i></i>得分规则</span>
+                    </div>
+                    <h2>1. 线上成绩比占比：{{proportion.onlinePercent}}%</h2>
+                    <div class="score_box" ng-if="scoreVideo.length>0">
+                        <div class="score_video">
+                            <p ng-click="isOpen(1)"><span></span>视频：共{{scoreItem.videoNum || "--"}}个，已完成{{scoreItem.subVideoNum || "--"}}个，得{{scoreItem.videoPercentileScore || "--"}}分<i ng-class="curOpen==1?'ion-chevron-up':'ion-chevron-down'"></i></p>
+                        </div>
+                        <ul class="score_chapter" ng-show="curOpen==1">
+                            <li ng-repeat="video in scoreVideo">
+                                <span class="tit">{{video.title}}</span>
+                                <span class="percent">{{video.schedule}}</span>
+                                <span>{{video.state}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="score_box" ng-if="assignmentList.length>0">
+                        <div class="score_video score_assignment" ng-click="isOpen(2)">
+                            <p><span></span>作业：共{{scoreItem.assignmentNum || "--"}}个，已完成{{scoreItem.subAssignmentNum || "--"}}个，得{{scoreItem.assignmentPercentileScore || "--"}}分<i ng-class="curOpen==2?'ion-chevron-up':'ion-chevron-down'"></i></p>
+                        </div>
+                        <ul class="score_chapter" ng-show="curOpen==2">
+                            <li class="li01" ng-repeat="assignment in assignmentList">
+                                <span class="span01">{{assignment.title}}</span>
+                                <p ng-repeat="a in assignment.list">
+                                    <span class="tit">{{a.title}}</span>
+                                    <span ng-if="a.submission">已提交</span>
+                                    <span ng-if="a.submission == null || !a.submission">未提交</span>
+                                    <span class="percent" ng-if="a.submission && a.submission.score">得分{{a.submission.score}}</span>
+                                    <span class="percent" ng-if="a.submission && (a.submission.score == null || a.submission.score == '')">得分尚未公布</span>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="score_box" ng-if="talkList.length>0">
+                        <div class="score_video score_topic" ng-click="isOpen(3)">
+                            <p><span></span>讨论：共{{scoreItem.topicNum || "--"}}个，已完成{{scoreItem.subTopicNum || "--"}}个，得{{scoreItem.topicPercentileScore || "--"}}分<i ng-class="curOpen==3?'ion-chevron-up':'ion-chevron-down'"></i></p>
+                        </div>
+                        <ul class="score_chapter" ng-show="curOpen==3">
+                            <li class="li01" ng-repeat="talk in talkList">
+                                <span class="span01">{{talk.title}}</span>
+                                <p ng-repeat="d in talk.list">
+                                    <span class="tit">{{d.title}}</span>
+                                    <span ng-if="d.submission">已提交</span>
+                                    <span ng-if="d.submission == null || !d.submission">未提交</span>
+                                    <span class="percent" ng-if="d.submission && d.submission.score">得分{{d.submission.score}}</span>
+                                    <span class="percent" ng-if="d.submission && (d.submission.score == null || d.submission.score == '')">得分尚未公布</span>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="score_box" ng-if="scoreQuiz.length>0">
+                        <div class="score_video score_quiz" ng-click="isOpen(4)">
+                            <p><span></span>测验：共{{scoreItem.quizNum || "--"}}个，已完成{{scoreItem.subQuizNum || "--"}}个，得{{scoreItem.quizPercentileScore || "--"}}分<i ng-class="curOpen==4?'ion-chevron-up':'ion-chevron-down'"></i></p>
+                        </div>
+                        <ul class="score_chapter" ng-show="curOpen==4">
+                            <li ng-repeat="quizList in scoreQuiz" class="li01">
+                                <span class="span01">{{quizList.title}}</span>
+                                <p ng-repeat="c in quizList.quizList">
+                                    <span class="tit">{{c.title}}</span>
+                                    <span ng-if="c.submission">已提交</span>
+                                    <span ng-if="c.submission == null || !c.submission">未提交</span>
+                                    <span class="percent" ng-if="c.submission && c.submission.score">得分{{c.submission.score}}</span>
+                                    <span class="percent" ng-if="c.submission && (c.submission.score == null || c.submission.score == '')">得分尚未公布</span>
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="score_box" ng-if="scoreExam.length>0">
+                        <div class="score_video score_exam" ng-click="isOpen(5)">
+                            <p><span></span>考试：获得成绩{{scoreItem.examPercentileScore || "--"}}分<i ng-class="curOpen==5?'ion-chevron-up':'ion-chevron-down'" ng-click="getDown(5)"></i></p>
+                        </div>
+                        <ul class="score_chapter" ng-show="curOpen==5">
+                            <li ng-repeat="examList in scoreExam">
+                                <span>{{examList.examName}}</span>
+                                <span ng-if="examList.subCount == 1">已提交</span>
+                                <span ng-if="examList.subCount == 0">未提交</span>
+                                <span>{{examList.score || "暂无成绩"}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <h3 style="margin-top: 10px;">2. 线下成绩占比{{proportion.offlinePercent}}%</h3>
+                    <div class="offline" ng-if="proportion.offlinePercent == '0'">本课程没有安排线下得分环节。</div>
+                    <div class="offline" ng-if="(!scoreItem.offLineScore || scoreItem.offLineScore == null || scoreItem.offLineScore == '') && proportion.offlinePercent != '0'">老师尚未录入得分。</div>
+                    <div class="offline" ng-if="scoreItem.offLineScore && proportion.offlinePercent != '0'">得分{{scoreItem.offLineScore}}</div>
+                </div>
+            </div>
+        </ion-scroll>
+        <script id="modal.html" type="text/ng-template">
+            <div class="modal">
+                <ion-header-bar>
+                    <div class="buttons customButtonLeft">
+                        <button class="button button-clear" ng-click="closeModal()">取消</button>
+                    </div>
+                    <h1 class="title" style="font-weight:normal;">发起讨论</h1>
+                    <div class="buttons customButton">
+                        <button class="button blueBtn" ng-click="submitNewTopic(newTopicCurrentForum.forumId)" ng-if="topic.message!=null&&topic.title!=null&&newTopicCurrentForum.name!='请选择'">发布</button>
+                        <button class="button" ng-if="topic.message==null||topic.title==null||newTopicCurrentForum.name=='请选择'" ng-click="unsubmit()">发布</button>
+                    </div>
+                </ion-header-bar>
+                <ion-content>
+                    <div class="classification-bar new_topic_content">版块：{{newTopicCurrentForum.name}}<span class="openBtn ion-ios-arrow-down" ng-click="changeForums()"></span></div>
+                    <div class="newTopic {{cursorStyle}}">
+                        <input class="newTopic-send" autofocus="true" id="newTopic-send" type="text" placeholder="请输入标题，不超过120个字符" ng-model="topic.title" maxlength="120" size="120"  required  />
+                        <textarea placeholder="请输入内容" ng-model="topic.message" required></textarea>
+                    </div>
+                </ion-content>
+            </div>
+        </script>
+        <!-- guide page to tell user the batch downloading-->
+        <div class="guide_page" ng-show="batchDownload==1">
+
+            <div class="clear-fix" >
+                <img src="images/batch.png" class="batch_download" />
+            </div>
+            <div class="guide_title"><img src="images/download_text.png" /></div>
+            <p>
+                有WiFi时提前下载<br />没有网络也能学，学习进度同样<span>有效</span>
+            </p>
+            <div class="btn" ng-click="hideDownloadTip()">我知道了</div>
+        </div>
+        <!-- guide page to tell user the batch downloading-->
+        <!-- batch download list begin -->
+        <div class="custom_actionSheet" ng-class="showActionSheet==true?'active':''">
+            <div class="custom_mask" ng-click="closeBatchDownload()"></div>
+            <div class="custom_content">
+                <header>
+                    <div class="icon_download"><span ng-show="numOfDownloading>0">{{numOfDownloading}}</span></div>
+                    <div ng-click="downloadAll()" class="download_all">下载全部</div>
+                    <div class="icon-closeBig" ng-click="closeBatchDownload()"></div>
+                </header>
+                <div class="content">
+                    <ul>
+                        <li ng-repeat="unit in unitDownloadList" ng-click="downloadUnit(unit,$event)">
+                            <div class="batch_item" ng-class="{'downloading':'downloading','finished':'finished'}[unit.status]"><div class="unit_name">{{unit.unitShortName}}</div><div class="ball">{{$index+1}}</div></div>
+
+                        </li>
+                    </ul>
+                </div>
+                <footer>点击章数即加入下载任务</footer>
+            </div>
+
+        </div>
+        <!-- batch download list end -->
+    </ion-content>
+    <div class="fixLayer"  ng-if="tab==2">
+
+        <div class="addTopic" ng-click="newTopic()">
+            +
+        </div>
+    </div>
+
+</ion-view>
+

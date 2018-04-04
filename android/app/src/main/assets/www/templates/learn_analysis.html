@@ -1,0 +1,64 @@
+<ion-view class="learn_analysis_wrap" hide-nav-bar="true">
+
+    <!--<ion-nav-buttons>-->
+        <!--<span class="icon_bar_back backs"></span>-->
+        <!--<h1 class="title answer-wrong" style="display: none"><i class="ion-android-checkbox-blank topic-ion-outline"></i>只看错题</h1>-->
+        <!--<span class="button button-clear" ng-click="goKeys()"><i class="icon_bar_number topic-icon-outline keys-ion-outline"></i>{{currentIndex}}/<i>{{quiz.quizQuestionList.length}}</i></span>-->
+    <!--</ion-nav-buttons>-->
+
+    <ion-content scroll="false" style="height: 100%;">
+        <div class="{{navBarStyle}}">
+            <span class="icon_bar_back lefts" ng-click="goTome()"></span>
+            <span class="rights key  icon_bar_number topic-icon-outline keys-ion-outline" ng-click="goKeys()">{{currentIndex}}/{{quiz.quizQuestionList.length}}</span>
+            <!--<span class="rights" ng-click="goKeys()"><i class="icon_bar_number topic-icon-outline keys-ion-outline">{{currentIndex}}/<i>{{quiz.quizQuestionList.length}}</i></i></span>-->
+        </div>
+
+        <ion-slide-box on-slide-changed="slideChange($index)" delegate-handle="myhandle" style="height: 100%;">
+            <ion-slide ng-repeat="question in quiz.quizQuestionList">
+                <ion-scroll style="width: 100%;height: 100%;" ng-if="$index == (currentIndex-1)" scrollbar-y="true">
+
+                    {{setCorrect(submissionData.question_id,submissionData[$index].correct)}}
+                    <p class="tit_wrong"  ng-hide="submissionData[$index].correct"><i class="icon_topic_wrong"></i>回答错误。{{getAnwser($index)!=""?'正确答案是'+getAnwser($index):''}}</p>
+                    <p class="tit_right"  ng-show="submissionData[$index].correct"><i class="icon_topic_right"></i>回答正确</p>
+
+                    <div class="con" >
+                        <div class="subject" ng-bind-html="renderHtml(handleImgUrl(question.questionName))"></div>
+
+                        <div class="answer" ng-if="question.questionType=='multiple_answers'">
+                            <dl ng-repeat="answer in question.answerList">
+
+                                <dt class="fl_left right" ng-if="isRight(question.questionId,answer.answerId)&&getCorrect(answer.question_id)" ng-bind-html="getLetter($index)" ></dt>
+                                <dt class="fl_left wrong" ng-if="isRight(question.questionId,answer.answerId)&&!getCorrect(answer.question_id)" ng-bind-html="getLetter($index)" ></dt>
+
+                                <dt class="fl_left" ng-if="isRight(question.questionId,answer.answerId) == undefined" ng-bind-html="getLetter($index)" ></dt>
+
+                                <dd class="fl_left" ng-bind-html="renderHtml(handleImgUrl(answer.text))"></dd>
+
+                            </dl>
+                        </div>
+
+                        <div class="radio" ng-if="question.questionType!='multiple_answers'">
+                            <dl ng-repeat="answer in question.answerList">
+
+                                <dt class="fl_left right" ng-if="isRight(question.questionId,answer.answerId)&&getCorrect(answer.question_id)" ng-bind-html="getLetter($index)" ></dt>
+                                <dt class="fl_left wrong" ng-if="isRight(question.questionId,answer.answerId)&&!getCorrect(answer.question_id)" ng-bind-html="getLetter($index)" ></dt>
+                                <dt class="fl_left" ng-if="isRight(question.questionId,answer.answerId) == undefined" ng-bind-html="getLetter($index)" ></dt>
+
+                                <dd class="fl_left" ng-bind-html="renderHtml(handleImgUrl(answer.text))"></dd>
+                            </dl>
+                        </div>
+                        <div class="analysis" ng-if="isAnalysis">解析：<span ng-bind-html="renderHtml(handleImgUrl(question.comment))"></span></div>
+                        <!--<p class="prompt go_quiz">返回测验说明</p>-->
+
+
+                        <div>
+                            <button class="sub_answer" ng-if="$index==(quiz.quizQuestionList.length-1)" ng-click="goBack()">返回章节导航</button>
+                        </div>
+                    </div>
+                </ion-scroll>
+
+
+            </ion-slide>
+        </ion-slide-box>
+    </ion-content>
+</ion-view>

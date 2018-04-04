@@ -1,0 +1,34 @@
+<ion-view hide-nav-bar="true">
+  <ion-content class="setting_about_wrap" scroll="false">
+
+    <div class="goBack">
+      <span class="icon_bar_back backs" ng-click="goTome()"></span>
+      <h1>设置</h1>
+    </div>
+
+    <ion-scroll style="height: 99%;width: 100%;margin-top:0px;">
+      <ul class="list flow">
+        <li class="item-toggle toggles">
+          <p>允许2G/3G/4G网络下载/播放</p>
+          <label class="toggle toggle-assertive fl_right">
+            <input type="checkbox" ng-checked="isAllowed" ng-click="allowed()">
+            <div class="track">
+              <div class="handle"></div>
+            </div>
+          </label>
+        </li>
+      </ul>
+
+      <section class="feedback">
+        <ul>
+          <!--<li ng-click="onComment()"><span class="fl_right ion-chevron-right" ></span>意见反馈</li>-->
+          <!--<li ng-click="clearCache()">清除缓存<span class="fl_right" style="font-size:14px;">{{cacheSize}}</span></li>-->
+          <li ng-click="ahoutOur()"><span class="fl_right ion-chevron-right"></span>关于我们</li>
+        </ul>
+      </section>
+      <div class="signOut" ng-click="signOut()">退出当前账户</div>
+    </ion-scroll>
+    <p class="{{editionStyle}}">版本号:{{version}}</p>
+
+  </ion-content>
+</ion-view>

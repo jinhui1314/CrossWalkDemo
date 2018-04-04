@@ -1,0 +1,61 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="me_downloading_wrap" style="background: #fff;">
+        <div class="goBack">
+            <span class="icon_bar_back backs" ng-click="goBack()"></span>
+            <h1 style="color:#fff;">正在下载</h1>
+            <em ng-click="deleteCon()" ng-if="downloadList.length > 0 && default == 0">{{editAndCancel}}</em>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;">
+            <div class="no_download" ng-if="downloadList.length == 0 || default == 1">
+                <img src="images/nodownload.png" alt=""/>
+                <p>提前下载好视频，随时随地拿学分</p>
+                <span>没有网络也能学，学习进度同样有效</span>
+                <span>如遇进度有误，重启APP即可</span>
+            </div>
+            <div class="downloading_content" ng-if="downloadList.length > 0">
+                <div class="pause" ng-click="goPause()" ng-if="tab == 0"><i ng-class="startAndpause == '全部暂停'?'paused':'play'"></i>{{startAndpause}}</div>
+                <ion-list show-delete="showDelete">
+                    <ion-item ng-repeat="list in downloadList" ng-hide="list.state == 4">
+                        <ion-delete-button ng-init="list.checked = false;" ng-class="{true: 'ion-android-checkbox', false: 'ion-android-checkbox-outline-blank downloadOutline'}[list.checked]" ng-click="noteChecked(list);"></ion-delete-button>
+                        <div class="downloading_list">
+                            <p>{{list.chapterName}}</p>
+                            <span ng-if="list.videoSize>0" class="size">{{list.videoSize}}MB</span>
+                            <span ng-if="list.state == 0" class="span01" ng-click="pause(list)">
+                                <b class="wait"></b>
+                                <svg width="20" height="20" class="svg-position">
+                                    <circle id="c1" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#CFD7E6" fill="none" ></circle>
+                                    <circle ng-if="list.processStart > 0" id="c3" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#52CC66" fill="none" stroke-dasharray="{{list.processStart}} {{list.processEnd}}"></circle>
+                                </svg>
+                            </span>
+                            <i ng-if="list.state == 3" ng-click="resume(list)">
+                                <b class="wrong icon-wrongs"></b>
+                            </i>
+                            <i class="i_complete" ng-if="list.state == 4">
+                                <b class="icon-down-complete complete"></b>
+                            </i>
+                            <span ng-if="list.state == 1" class="span01" ng-click="pause(list)">
+                                <b class="downloading"></b>
+                                <svg width="20" height="20" class="svg-position">
+                                    <circle id="c1" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#CFD7E6" fill="none" ></circle>
+                                    <circle id="c3" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#52CC66" fill="none" stroke-dasharray="{{list.processStart}} {{list.processEnd}}"></circle>
+                                </svg>
+                            </span>
+                            <span ng-if="list.state == 2" class="span01" ng-click="resume(list)">
+                                <b class="suspend"></b>
+                                <svg width="20" height="20" class="svg-position">
+                                    <circle id="c1" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#CFD7E6" fill="none" ></circle>
+                                    <circle id="c3" cx="10" cy="10" r="9" stroke-width="1.5" stroke="#52CC66" fill="none" stroke-dasharray="{{list.processStart}} {{list.processEnd}}"></circle>
+                                </svg>
+                            </span>
+
+                        </div>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </ion-scroll>
+        <ul class="delete_button_wrap" ng-if="deleteBtn">
+            <li ng-click="selectAll()">{{allSelectOrNot}}</li>
+            <li ng-click="deleteAll(num)">删除（{{num}}）</li>
+        </ul>
+    </ion-content>
+</ion-view>

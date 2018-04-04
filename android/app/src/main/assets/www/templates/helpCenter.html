@@ -1,0 +1,38 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="help_center_wrap" scroll="false">
+        <div class="goBack" style="background: #1FB6FF;border-bottom:0;">
+
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1 style="color:#fff;" class="course-title">帮助中心</h1>
+            <i class="icon_search_wrap" style="width: 40px;height: 40px;display: inline-block;" ng-click="searchHelp()"><i class="icon-search" style="font-family: 'gxbIcon';"></i></i>
+
+        </div>
+        <ion-scroll style="width: 100%;height:{{scrollHeight()}}" on-scroll="scrollHandle1()" delegate-handle="helpScroll">
+                <div class="onlineQq clear-fix" ng-click="customerService()">
+                    <span class="onlineQq_text fl_left">在线客服</span>
+                    <span class="onlineQq_img fl_left"></span>
+                    <span class="arrow_right ion-chevron-right fl_right"></span>
+                    <em class="fl_right">08:00 - 23:00</em>
+                </div>
+                <div class="bg"></div>
+            <ul class="help_content">
+                <li ng-class="showItem == list.num?'section_li02 clear-fix':'section_li01 clear-fix'" ng-repeat="list in navlists" ng-click="hideItem(list.num)">
+                    <div style="padding:0 5%;height: 50px;border-bottom: 1px solid #E0E0E0;">
+                        <span class="help_main">{{list.navigationName}}</span>
+                        <span ng-class='showItem == list.num?"arrow_right ion-chevron-up fl_right":"arrow_right ion-chevron-down fl_right"'  ng-if="list.childList"></span>
+                        <span class="arrow_right ion-chevron-right fl_right" ng-if="!list.childList"></span>
+                    </div>
+                    <ul class="help_item" ng-if="showItem == list.num">
+                        <li class="item_li clear-fix" ng-click="goQuestion(item.navigationName,item.helpCenterId)" ng-repeat="item in list.childList" style="width: 100%;">
+                            <span class="item_li item_span">{{item.navigationName}}</span>
+                            <span class="arrow_right ion-chevron-right fl_right"></span>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+
+        </ion-scroll>
+
+    </ion-content>
+</ion-view>

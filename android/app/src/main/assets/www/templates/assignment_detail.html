@@ -1,0 +1,80 @@
+<ion-view hide-nav-bar="true">
+  <ion-header-bar class="goBack">
+    <span style="color:#fff;" class="icon_bar_back backs assignment-back" ng-click="goTome()"></span>
+    <h1 style="color:#fff;width: 52%;margin:0 auto;">{{assignment.title}}</h1>
+  </ion-header-bar>
+  <ion-content class="assignment" delegate-handle="mainScroll">
+    <!--<div class="goBack" style="background: #1FB6FF;">-->
+      <!--<span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>-->
+      <!--<h1 style="color:#fff;width: 52%;margin:0 auto;">{{assignment.title}}</h1>-->
+    <!--</div>-->
+
+      <div class="assignment-detail">
+        <div class="question">
+          <div class="title question-title">
+            问题
+          </div>
+          <div class="question-des" ng-bind-html="assignment.body">
+          </div>
+          <div class="attachment" ng-repeat="item in assignment.assetList">
+            <span class="ion-paperclip"></span>
+            <div class="name">{{item.title}} {{formatSize(item.attachmentFileSize)}}</div>
+            <div class="operation"  ng-click="openImage(item.link)">查看</div>
+            <div class="space"></div>
+          </div>
+        </div>
+        <div class="divide-line"></div>
+        <div class="answer" ng-show="type==1||type==2">
+          <div class="title answer-title">我的回答</div>
+            <textarea ng-model="body" id="answer" ></textarea>
+          <div class="upload">
+            <div class="upload-btn"><p id="slide_file_element" class="select" style="line-height: inherit">上传附件</p></div><gxbuploader data="uploadData"></gxbuploader><div class="operation">文件最大为50M</div>
+            <div class="uploadImg  hide" id="loading"><img src="./images/uploadLoading.gif" alt=""></div>
+            </div>
+          <div class="attachment bottom" ng-repeat="(index,item) in assetList">
+            <span class="ion-paperclip"></span>
+            <div class="name">{{item.title}}</div><div class="size">{{formatSize(item.size)}}</div>
+            <div class="operation" ng-click="openImage(item.url)">查看</div>
+            <div class="operation del" ng-click="delImg(index)">删除</div>
+          </div>
+          <div class="check-wrapper" ng-click="changeState1()">
+            <span ng-class="isChecked==1?'ion-android-checkbox':'ion-android-checkbox-outline-blank'"></span><!--ion-android-checkbox-outline-blank -->
+            <div class="check-text">依照学术诚信条款，我保证此回答为本人原创，<br />所有回答中引用的外部材料意境做了出处标记。</div>
+          </div>
+          <div class="btn-wrapper">
+            <div class="submit-btn" ng-class="(isChecked==1&&(body.length>0||assetList.length>0))?'active':'noClick'" ng-if="type==1" ng-click="showConfirm1()">提交</div>
+            <div class="submit-btn" ng-class="(isChecked==1&&(body.length>0||assetList.length>0))?'active':'noClick'" ng-click="showConfirm()" ng-if="type==2">重新提交</div>
+          </div>
+        </div>
+        <div ng-show="type==3">
+          <div class="answer">
+            <div class="title answer-title">我的回答</div>
+            <div class="answer-detail">
+              <div class="text" ng-bind-html="submission.body">
+
+              </div>
+              <div class="attachment" ng-repeat="item in assetList">
+                <span class="ion-paperclip"></span>
+                <div class="name">{{item.title}}  {{item.size}}kb</div>
+                <div class="operation" ng-click="openImage(item.url)">查看</div>
+                <div class="space"></div>
+              </div>
+            </div>
+          </div>
+          <div class="divide-line"></div>
+          <div class="result">
+            <div class="title">得分</div>
+            <div class="score-wrapper">
+              <div class="score">{{submission.score}}分</div>
+              <div class="full-credit">（满分{{assignment.maxScore ||100}}）</div>
+            </div>
+            <div class="title remark">评语：</div>
+            <div class="comment" ng-bind-html="submission.gradedComment"></div>
+          </div>
+        </div>
+
+      </div>
+
+
+  </ion-content>
+</ion-view>

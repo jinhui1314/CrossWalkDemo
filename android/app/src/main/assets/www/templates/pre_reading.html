@@ -1,0 +1,31 @@
+<ion-view hide-nav-bar="true">
+  <ion-content scroll="false" class="pre_reading_wrap" style="background: #fff;">
+    <div class="goBack" style="background: #1FB6FF;border-bottom: 0;" id="preBack">
+      <span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>
+      <h1 style="color:#fff;">学前必读</h1>
+    </div>
+    <ion-scroll style="width: 100%;" id="scrollLayer">
+      <div class="pre_header">
+        <span>!</span>下面都是前辈摔过的坑，你可要乖乖看完
+      </div>
+      <div class="pre_detail">
+        <dl>
+          <dt>显示“本课程已学完”，但是怎么没成绩？</dt>
+          <dd>是同学你学习勤奋so快so快就提前学完了，结课时间还没到呐，当然还没有总成绩...</dd>
+        </dl>
+        <dl>
+          <dt>结课后立马就有成绩了吗？</dt>
+          <dd>等老师吭哧吭哧全部评卷完了，才能出成绩哦！不过成绩公布之前你可以查看测验作业等单项成绩来估估分...</dd>
+        </dl>
+        <dl>
+          <dt>最重要的！多少合格？怎么获得学分？</dt>
+          <dd>去问学校老师！我们只是学习成绩的搬运工，我们会把你的成绩交给学校，学分和及格线啥的还是学校说了算...</dd>
+        </dl>
+      </div>
+      <div class="pre_btn" ng-click="toLearn()">我知道了</div>
+      <div class="pre_bottom">本页面关闭后还可在<b>“我的- 帮助”</b>找到答案<br />
+        也可以联系客服</div>
+    </ion-scroll>
+    <network ng-if="networkStates == 'none'"></network>
+  </ion-content>
+</ion-view>

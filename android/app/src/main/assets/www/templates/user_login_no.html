@@ -1,0 +1,51 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="user_login_wrap">
+
+        <header class="header">
+            <span style="color:#2A2F33;font-family: gxbIcon;" class="back icon-closeBig" ng-click="goBack()"></span>
+            <span class="login_icon_qq" ng-click="customerService()"><em class="icon-service"></em></span>
+            <div class="login-pic"><img src="./images/loginBg.png" alt=""/></div>
+        </header>
+
+        <div class="con">
+
+            <form name="loginForm2" class="loginForm"  novalidate>
+                <div class="account_number2 formWrap">
+                    <label class="item-input texts">
+                        <span class="input-label input-sp icon-userName input-icon" style="font-size: 22px;"></span>
+                        <input type="text" name="userName2" placeholder="请输入手机号/邮箱" ng-model="$loginNoModel.userName" required  />
+                    </label>
+                    <label class="item-input texts">
+                        <span class="input-label input-sp icon-password input-icon"></span>
+                        <input type="password"  name="password2" placeholder="请输入密码" ng-model="$loginNoModel.password"  />
+                    </label>
+                    <span ng-if="$loginNoModel.password" class="ion-close-circled loginClear" ng-click="clearInput()"></span>
+                    <span ng-if="$loginNoModel.userName" class="ion-close-circled loginClearIcon" ng-click="clearLoginInput()"></span>
+                    <span ng-click="forget()" class="login_forget">忘记密码？</span>
+                    <button ng-if="$loginNoModel.userName != null && $loginNoModel.password !=null" class="sign_up" name="submit2"  type="submit" ng-click="doLogin()">登录</button>
+                    <button ng-if="$loginNoModel.userName == null || $loginNoModel.password == null" class="no_signUp" name="submit2"  type="submit">登录</button>
+                </div>
+            </form>
+
+            <ul class="link">
+                <li>已认证学生，也可 <span ng-click="classNo()">学号登录</span></li>
+                <li class="receive" ui-sref="account_signup">免费注册</li>
+            </ul>
+
+            <div class="escrowLogin hide-on-keyboard-open">
+                <span>第三方登录</span>
+                <i class="icon-weChat escrow_wechat" ng-click="goWechat()"></i>
+                <i class="icon-QQ escrow_qq" ng-click="goqq()"></i>
+            </div>
+        </div>
+
+    </ion-content>
+    <div id="register_guide" ng-if="guide==0">
+        <div class="bottom_part">
+            <div class="guide_btn" ng-click="hideGuide()">我知道了</div>
+            <p>(已注册过的同学无需注册，请直接登录)</p>
+        </div>
+
+    </div>
+</ion-view>
+

@@ -1,0 +1,92 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="community_wrap" delegate-handle="mainhanddle">
+
+        <div class="goBack" style="background: #1FB6FF;border-bottom:0;">
+            <ul class="campus_tab">
+                <li ng-click="showClcok()"><p style="width:45px;height:39px;" ng-class="tab == 0?'cur':''">求帮</p></li>
+                <li ng-click="showChats()"><p style="width:45px;height:39px;" ng-class="tab == 1?'cur':''">帮主</p></li>
+            </ul>
+        </div>
+        <div class="community_search text-center">
+        <p type="button" class="btn no-bg-btn" ng-click="communitySearch()"><i class="iconfont icon-search1"></i><span>搜索问题、用户关键词</span></p>
+        </div>
+        <ion-scroll style="width: 100%;height: 93%;margin-top: 0" ng-if="tab == 0" delegate-handle="squareScroll" on-scroll="scrollHandle()">
+
+            <ion-slide-box style="height:{{getHeight()}}px" delegate-handle="firstslide" does-continue="true" auto-play="true" slide-interval="2000" show-pager="true" on-slide-change="slideHasChanged(index)" ng-if="communityBanners.length>0">
+                <ion-slide class="bar-stable" ng-repeat="ads in communityBanners" style="width: 100%;">
+
+                    <img src="{{ads.link}}" style="width:100%;height:100%" ng-click="bannerLinks(ads.tolink,$index)" />
+                    <!--<div style="background: url(http://bigbang.gaoxiaobang.com/wx-qa/networks/banner/{{ads.link}}) no-repeat center center;-->
+                <!--background-size:cover;width: 100%;height: 100%;" ng-click="bannerLinks(ads.tolink,$index)"></div>-->
+                </ion-slide>
+            </ion-slide-box>
+            <ul class="sound-list">
+                <li class="sound-item  mt8" ng-repeat="lists in communityDataList"  ng-click="communityDetails(lists.lid)">
+                    <h3 class="community_square_list_title">{{lists.title}}</h3>
+                    <div class="flex">
+                        <div class="community_photo">
+                            <!--<img src="{{{true:lists.avatar,false:'http://bigbang.gaoxiaobang.com/wx-qa/networks/avatars/'+lists.avatar}[lists.source==1]}}" />-->
+                            <img src="{{lists.avatar}}" />
+                        </div>
+                        <div class="flex1">
+                            <p class="nickname">{{lists.nickname}}<span>（{{lists.signature}}）</span></p>
+                            <div class="flex community_sound">
+                                <!--<span class="tipicon {{{true:'tipicon1',false:'tipicon2'}[$index == thisPlay]}}"></span>-->
+                                <!-- <img class="tipicon" src="images/shape3.svg" alt=""> -->
+                                <p class="sound_btn {{{true:'green',false:'grey'}[$index == thisPlay]}}" ng-click="showPlay1($index,lists.content,lists.source);$event.stopPropagation();">
+                                    <img ng-src="{{{true:arrImgSrc,false:'images/voice.png'}[$index == thisPlay]}}">
+                                    <span class="fr" style="color: {{{true:'#fff',false:'#6E7880'}[$index == thisPlay]}};">{{{true:'播放中...',false:'偷听一下'}[$index == thisPlay]}}</span>
+                                    <!--<audio class="audioPlays" id="audioPlayer{{$index}}" src="{{{true:lists.content,false:'http://bigbang.gaoxiaobang.com/wx-qa/networks/uploadsound/'+lists.content}[lists.source==1]}}"></audio>-->
+                                </p>
+                                <p class="community_duration flex1">{{lists.duration}}"</p>
+                            </div>
+                            <div class="flex community_time">
+                                <!--<p>{{}}-->
+                                <!--</p>-->
+                                 <p>{{lists.creationdate| amDifference1 : null : 'days'}}</p>
+                                <p class="flex1">
+                                    <span>{{lists.likes}}赞</span><em style="font-size:10px;color:#e1e3e6;margin-left:4px;">|</em>
+                                    <span>{{lists.listencount}}人偷听</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <loading ng-show="showLoadMore"></loading>
+            <div class="loadMore" ng-show="showLoadMore==0">没有更多了</div>
+            <div style="height:80px;"></div>
+        </ion-scroll>
+        <audio id="audio" src=""  loop="loop" autoplay="autoplay" style="display:none;"></audio>
+        <ion-scroll style="width:100%;height: 93%;" ng-if="tab == 1" delegate-handle="communityScroll">
+            <ion-slide-box style="height:195px;" delegate-handle="secondslide" does-continue="true" auto-play="true" slide-interval="2000" show-pager="true" on-slide-change="slideHasChanged(index)" ng-if="communityRecommendData.length>0">
+                <ion-slide class="bar-stable" ng-repeat="hotuser in communityRecommendData" style="width: 100%;">
+                    <ul class="community_recommend">
+                        <li class="community_recommend_list" ng-repeat="data in hotuser" ng-click="recommendLink(data.uid)">
+                            <div class="community_recommend_img">
+                                <img src="{{data.avatar}}"/>
+                                <p class="community_recommend_txt">{{data.nickname}}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </ion-slide>
+            </ion-slide-box>
+            <ul class="community_classify">
+                <li class="flex" ng-repeat="classify in communityClassifyData" ng-click="classifyLink(classify.cid)" ng-class="$index==communityClassifyData.length-1?'last':''">
+                    <div class="flex1">
+                        <i class="iconfont android-iconfont icon-community{{$index}} "></i>
+                        <span>{{classify.categoryname}}</span>
+                    </div>
+                    <i class="icon-sharp-corners"></i>
+                </li>
+            </ul>
+            <div style="height:80px;"></div>
+        </ion-scroll>
+
+        <div ng-show="tab== 0" class="campus_icon" ng-click="goClock()">
+            <i class="icon-sign_ic"></i>
+        </div>
+
+        <network ng-show="networkStates=='none'&&accessToken"></network>
+    </ion-content>
+</ion-view>

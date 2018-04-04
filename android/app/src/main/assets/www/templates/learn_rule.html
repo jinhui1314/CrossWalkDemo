@@ -1,0 +1,43 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="learn_rule_wrap">
+        <div class="goBack" style="background: #1FB6FF;border-bottom: 0;">
+            <span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1 style="color:#fff;">得分规则</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;">
+            <div class="explain">最终得分，为以下各项加权得分之和，满分100分</div>
+            <div class="content">
+                <div class="rule_card" ng-if="proportion.videoPercent>0">
+                    <p class="title"><span></span>视频：</p>
+                    <p class="section">结课前看完全部视频，才可以拿到视频成绩！</p>
+                    <p class="section">得分规则：(完整观看视频数/总视频数) x 权重{{proportion.videoPercent}}%</p>
+                </div>
+                <div class="rule_card" ng-if="proportion.assignmentPercent>0">
+                    <p class="title"><span style="background: #EC7E7B;"></span>作业：</p>
+                    <p class="section">老师作业以老师评分为准；互评作业在互评结束后公布成绩。</p>
+                    <p class="section">得分规则：(作业得分总和/总作业数) x 权重{{proportion.assignmentPercent}}%</p>
+                </div>
+                <div class="rule_card" ng-if="proportion.topicPercent>0">
+                    <p class="title"><span style="background: #76BD76;"></span>讨论：</p>
+                    <p class="section">截止前参与才有成绩，默认满分，最终以老师参与的评分为准。</p>
+                    <p class="section">得分规则：(讨论得分总和/总讨论数) x 权重{{proportion.topicPercent}}%</p>
+                </div>
+                <div class="rule_card" ng-if="proportion.quizPercent>0">
+                    <p class="title"><span style="background: #689FE0;"></span>测验：</p>
+                    <p class="section">如果是能多次提交的测验，以最高分为准。</p>
+                    <p class="section">得分规则：(测验得分总和/总测验数) x 权重{{proportion.quizPercent}}%</p>
+                </div>
+                <div class="rule_card" ng-if="proportion.examPercent>0">
+                    <p class="title"><span style="background: #FBC61B;"></span>考试：</p>
+                    <p class="section">考试成绩在成绩公布后可查看，若参加重考，以重考成绩为准。</p>
+                    <p class="section">得分规则：考试成绩 x 权重{{proportion.examPercent}}%</p>
+                </div>
+                <div class="rule_card" ng-if="proportion.offlinePercent>0">
+                    <p class="title"><span style="background: #FEB4DF;"></span>线下成绩：</p>
+                    <p class="section">线下成绩考核标准以老师通知为准，由老师录入系统后显示。</p>
+                    <p class="section">得分规则：线下成绩 x 权重{{proportion.offlinePercent}}%</p>
+                </div>
+            </div>
+        </ion-scroll>
+    </ion-content>
+</ion-view>

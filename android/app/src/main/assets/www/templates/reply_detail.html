@@ -1,0 +1,53 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="reply_detail_wrap">
+        <div class="goBack">
+            <span class="icon_bar_back backs" ng-click="goBack()"></span>
+            <h1>回复详情</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 83%;margin-top: 0;">
+            <div class="reply">
+                <div class="reply_card">
+                    <div class="card_title">
+                        <i ng-if="replyDetail.userAvatar==''||replyDetail.userAvatar==null"><em class="icon-me-def"></em></i>
+                        <img src="{{replyDetail.userAvatar}}" alt="" class="fl_left" onerror="javascript:this.src=gxb.settings.cdn.defaultAvatar.getPaths()" ng-if="replyDetail.userAvatar"/>
+                        <span class="fl_left name">{{replyDetail.userName}} </span>
+                    </div>
+                    <div style="padding-left: 28px;" class="card_content" ng-bind-html="replyDetail.message"></div>
+                    <div style="padding-left: 28px;" class="cardDetail">
+                        <span class="fl_left">{{replyDetail.postsCount  || 0}}人评论</span>
+                        <span class="fl_right">{{replyDetail.createdAt}}</span>
+                    </div>
+                </div>
+                <div style="height: 10px;background: #F0F4FA"></div>
+                <div>
+                    <div class="allReply" ng-if="tab == 1">全部回复</div>
+                    <div class="reply_card_wrap">
+                        <div style="padding:15px 5% 15px 0;" class="reply_card" ng-repeat="reply in replyList" ng-if="tab == 1">
+                            <div class="card_title">
+                                <i ng-if="reply.userAvatar_url==''||reply.userAvatar_url==null"><em class="icon-me-def"></em></i>
+                                <img src="{{reply.userAvatar_url}}" alt="" class="fl_left" onerror="javascript:this.src=gxb.settings.cdn.defaultAvatar.getPaths()" ng-if="reply.userAvatar_url"/>
+                                <span class="fl_left name">{{reply.userName}}</span>
+                                <span ng-if="reply.userId == replyUser.id && type == 0" class="fl_right del" ng-click="delete(reply.postId)">删除</span>
+                            </div>
+                            <div class="card_content" style="margin-left:32px" ng-bind-html="reply.message">
+                            </div>
+                            <div class="card_foot" ><span class="fl_right times">{{reply.postTime}}</span></div>
+                        </div>
+                    </div>
+
+                    <div ng-if="tab == 0" class="noReplyDetail">暂无评论</div>
+
+                </div>
+            </div>
+        </ion-scroll>
+        <ion-footer-bar keyboard-attach class="bar-assertive">
+            <div class="reply_text">
+                <form name="replyForm">
+                    <textarea id="replyText" type="text" placeholder="我来评论" class="inputText" ng-model="reply.message" ng-keyup="MaxMe()"></textarea>
+                    <i class="deleteBtn" ng-if="reply.message ==''" ng-click="onSubmit()"><span></span></i>
+                    <i class="sendInput" ng-if="reply.message != ''" ng-click="onSubmit()"><span></span></i>
+                </form>
+            </div>
+        </ion-footer-bar>
+    </ion-content>
+</ion-view>

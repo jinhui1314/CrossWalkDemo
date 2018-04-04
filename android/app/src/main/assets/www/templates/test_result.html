@@ -1,0 +1,56 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false">
+        <div class="goBack" style="background: #1FB6FF;border-bottom:0;">
+            <span class="icon_bar_back backs" ng-click="goBack()"></span>
+            <h1 style="color:#fff;">职业测试</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;">
+            <div class="test_result_wrap">
+                <p class="tit">原来最适合{{userObject.name || "Ta"}}的是这个职业！</p>
+                <div class="pic">
+                    <img ng-if="a>b && a>c && b!=c" src="./images/brain.png" alt=""/>
+                    <img ng-if="b>c && b>a && c!=a" src="./images/Intelligence.png" alt=""/>
+                    <img ng-if="c>a && c>b && a!=b" src="./images/prudence.png" alt=""/>
+                    <img ng-if="a == b && b == c" src="./images/balance.png" alt=""/>
+                    <img ng-if="a == b && a != c" src="./images/smooth.png" alt=""/>
+                    <img ng-if="a == c && a != c" src="./images/syb.png" alt=""/>
+                    <img ng-if="b == c && b != a" src="./images/practical.png" alt=""/>
+                </div>
+
+                <div class="con">
+                    <div class="char"></div>
+                    <span ng-if="a>b && a>c && b!=c">脑力劳动型</span>
+                    <span ng-if="b>a && b>c && a!=c">创意思维型</span>
+                    <span ng-if="c>a && c>b && a!=b">谨慎努力型</span>
+                    <span ng-if="a == b && b == c">平衡发展型</span>
+                    <span ng-if="a == b && a != c">平稳成长型</span>
+                    <span ng-if="a == c && a != c">创业奋斗型</span>
+                    <span ng-if="b == c && b != a">踏实肯干型</span>
+
+                    <div class="trade" ng-if="a>b && a>c && b!=c">适合职业：产品经理、金融管理人、数据规划师、战略策划等</div>
+                    <div class="trade" ng-if="b>a && b>c && a!=c">适合职业：设计师、文案运营、产品开发、媒体工作者等</div>
+                    <div class="trade" ng-if="c>a && c>b && a!=b">适合职业：攻城狮、程序猿、大数据构建师、用户运营等</div>
+                    <div class="trade" ng-if="a == b && b== c">适合职业：销售、外交官、前台、总裁助理等</div>
+                    <div class="trade" ng-if="a == b && a != c">适合职业：新媒体运营、企业HR、行政助理等</div>
+                    <div class="trade" ng-if="a == c && a != c">适合职业：创业者、CEO、COO等</div>
+                    <div class="trade" ng-if="b == c && b != a">适合职业：码农、客服、销售助理等</div>
+
+                    <div class="analyse" ng-if="a>b && a>c && b!=c">分析：这类人为人理性客观，总能从一对线索中发现最重要的事物。他们善于制定各种计划，愿意用自己的头脑去思考下一步前进的方向，在各个团队中都是leader般的存在。不过没事要多吃核桃，避免用脑过度。</div>
+                    <div class="analyse" ng-if="b>a && b>c && a!=c">分析：这类人的脑洞往往比旁人更大，而且很有自己的主见。他们拥有欣赏美和发现美的眼睛，世界在他们眼中呈现出不同的色彩。有时他们的思维会跳转太快，以至于身边的人高呼“跟不上呀”。他们都极具个性，这种个性有时候会成为他们的特色，有时也会为他们带去一些小困扰。</div>
+                    <div class="analyse" ng-if="c>a && c>b && a!=b">分析：这种类型的人为人真诚。重良心，有毅力，道德感强，稳重，执著，孝敬尊重父母，对异性较严肃，受到周围人的好评，责任感强，工作勤奋，睡眠较少，在直接接触的小群体中会自然而然地成为领导性人物。他们细心周到，有始有终，是非善恶分明，乐于结交努力苦干的朋友。但有时显得过于小心谨慎，不敢说“不”。</div>
+                    <div class="analyse" ng-if="a == b && b== c">分析：这类人在各项的发展都较为平均，几乎没有什么难得倒他们的事。不过有时，也因为自身条件过于平衡，而遭受一些制约。努力提升其中某一项技能，将会获得不一样的收获哟。</div>
+                    <div class="analyse" ng-if="a == b && a != c">分析：这类人既聪明又漂亮，是人见人爱的类型。可惜身体素质有待加强，很多时候无法吃苦，这样让他们在成长的道路上会错失一些机会。不过人品不错的他们，每一天都在平稳的成长着。</div>
+                    <div class="analyse" ng-if="a == c && a != c">分析：这类人既有智商又有能力，还有什么事会难道他们呢？他们会明确自己的目标，之后用自己的双手去实现目标。颜值对于他们而言并不是最重要的，因为在磨练的过程中，他们已经成为自己心中最美的人。</div>
+                    <div class="analyse" ng-if="b == c && b != a">分析：这类人什么都不错，就是有时太过“一根筋”，他们认定的事，很少有人能够改变他们的想法。这让他们在很多时候，只能卡在当前的位置，而不法进一步晋升。不过他们的每一天都是快乐的，因为他们对现状很满意，是幸福感较高的一群人。</div>
+
+                <p class="again" ng-click="getAgain()">再测一次</p>
+                    <div class="btn">
+                        <button ng-click="getShare()">分享结果给好友</button>
+                    </div>
+                    <p class="supply">此测试仅供娱乐！</p>
+                    <p class="supply" style="padding-bottom: 30px;">点此 <a ng-click="goFound()">传送门</a> 进入感兴趣的专题发现更多</p>
+                </div>
+            </div>
+        </ion-scroll>
+    </ion-content>
+</ion-view>

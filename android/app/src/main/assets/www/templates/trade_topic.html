@@ -1,0 +1,33 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="trade_topic_wrap">
+        <div class="goBack" style="background: #1FB6FF;border-bottom:0;">
+            <span class="icon_bar_back backs" ng-click="goBack()"></span>
+            <h1 style="color:#fff;">职业测试</h1>
+        </div>
+        <div class="progress">
+            <dl class="barBox">
+                <dd class="barLine">
+                    <div class="charts" style="width: {{processWidth()}};"></div>
+                </dd>
+            </dl>
+            <p>{{currentIndex}}/24</p>
+        </div>
+        <ion-slide-box show-pager="false" delegate-handle="myHandle" on-slide-changed="slideChange($index)" slide-interval="100">
+            <ion-slide ng-repeat="a in data" style="height: 100vh;">
+                <div class="con" ng-if="$index == (currentIndex-1)">
+                    <div class="question">{{a.question}}</div>
+                    <dl class="answer" ng-click="doAnswer(b.type,$index)" ng-repeat="b in a.answer">
+                        <dt ng-class="stylechoice[currentIndex-1] == $index?'ion-android-radio-button-on active':'ion-android-radio-button-off'" class=""></dt>
+                        <dd>{{b.text}}</dd>
+                    </dl>
+                </div>
+
+                <div class="submit" ng-show="currentIndex == 24" ng-click="getSubmit()">
+                    <button class="btn">提交看结果</button>
+                </div>
+            </ion-slide>
+
+        </ion-slide-box>
+        <div class="slideTip"><span></span>左右滑动切换题目<span></span></div>
+    </ion-content>
+</ion-view>

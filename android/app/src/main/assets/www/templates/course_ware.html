@@ -1,0 +1,32 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false" class="course_ware_wrap">
+        <div class="goBack" style="background: #1FB6FF;border-bottom: 0;">
+            <span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1 style="color:#fff;">课件详情</h1>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;" on-scroll="scrollHandle1()" delegate-handle="scrollLayer">
+
+            <div class="header">
+                <h2>{{ware.title}}</h2>
+                <div class="con" ng-class="isOpen1=='0'?'':'open'" id="wareDetail" ng-bind-html="ware.asset.attachmentDes"></div>
+                <div ng-show="openText == true" class="no-bg-btn" ng-click="open1()" ng-bind="text1"></div>
+            </div>
+
+            <div class="list" ng-show="wareList.length >0">
+                <p class="tit">课件 <span>({{wareList.length || 0}}个)</span></p>
+                <div class="div_3" ng-repeat="lists in wareList" ng-click="showEnclosure(lists)">
+                    <div class="div_3_1 {{lists.className}}">
+                        <span ng-show="lists.className == ''">.{{lists.fileType}}</span>
+                    </div>
+                    <div class="div_3_wrap">
+                        <div class="div_3_2">{{lists.title}}</div>
+                        <div class="div_3_3">{{lists.size}}</div>
+                    </div>
+                </div>
+            </div>
+
+            <network ng-if="networkStates == 'none'"></network>
+
+        </ion-scroll>
+    </ion-content>
+</ion-view>

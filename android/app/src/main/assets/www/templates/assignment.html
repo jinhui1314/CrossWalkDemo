@@ -1,0 +1,65 @@
+<ion-view hide-nav-bar="true">
+  <ion-content class="assignment" scroll="false">
+    <div class="goBack" style="background: #1FB6FF;">
+      <span style="color:#fff;" class="icon_bar_back backs" ng-click="goTome()"></span>
+      <h1 style="color:#fff;width: 52%;margin:0 auto;">{{assignment.title}}</h1>
+    </div>
+    <ion-scroll style="width: 100%;height:95%;">
+      <div class="assignment-container">
+        <div class="title">
+          阶段进度
+        </div>
+        <div class="stage begin" ng-class="(isBegin||willBegin)?'active':''">
+          <div class="stage-circle"><span></span></div>
+          <div class="stage-name">未开始</div>
+          <div class="stage-des">开始时间：{{assignment.unlockAt}} <br /><span ng-if="isBegin">剩余{{assignment.unlockDays}}天</span><span ng-if="willBegin">即将开始</span></div>
+        </div>
+        <div class="stage" ng-class="(isSubmit||willSubmit)?'active':''">
+          <div class="stage-circle"><span></span></div>
+          <div class="stage-name">提交阶段</div>
+          <div class="stage-des">截止时间：{{assignment.dueAt}} <br /><span ng-if="isSubmit">剩余{{assignment.dueDays}}天</span><span ng-if="willSubmit">即将截止</span></div>
+        </div>
+        <div class="stage" ng-class="(isCorrect||willCorrect)?'active':''">
+          <div class="stage-circle"><span></span></div>
+          <div class="stage-name">老师批改</div>
+          <div class="stage-des">截止时间：{{assignment.publishedAt}} <br /><span ng-if="isCorrect">剩余{{assignment.publishedEndDays}}天</span><span ng-if="willCorrect">即将截止</span></div>
+        </div>
+        <div class="stage end" ng-class="isPublish?'active':''">
+          <div class="stage-circle"><span></span></div>
+          <div class="stage-name">成绩公布</div>
+          <div class="stage-des">公布时间：{{assignment.publishedAt}} <br />
+            <!--<span ng-if="willPublish">剩余{{assignment.publishedEndDays}}天</span>-->
+            <span ng-if="willCorrect">即将公布</span></div>
+        </div>
+        <div class="performance" ng-if="isBegin||willBegin">
+          <h2>阶段进度</h2>
+          <p>作业尚未开始</p>
+        </div>
+        <div class="performance" ng-if="(isSubmit||willSubmit)&&!submission.submissionId">
+          <h2>作业成绩</h2>
+          <p>暂无成绩，请先提交作业</p>
+        </div>
+        <div class="performance" ng-if="(isSubmit||willSubmit)&&submission.submissionId||isCorrect||willCorrect">
+          <h2>作业成绩</h2>
+          <p>暂无成绩，请等待</p>
+        </div>
+        <div class="performance" ng-if="isPublish">
+          <h2>作业成绩</h2>
+          <div class="score-wrapper">
+            <div class="score">{{submission.score||0}}分</div>
+            <div class="full-credit">(满分{{assignment.maxScore||100}})</div>
+          </div>
+        </div>
+        <div class="submit-btn disable" ng-if="isBegin||willBegin">开始作业</div>
+        <div class="submit-btn active" ng-if="(isSubmit||willSubmit)&&!submission.submissionId" ng-click="goAssignmentDetail(1)">开始作业</div>
+        <div class="submit-btn disable" ng-if="isCorrect||(isSubmit||willSubmit)&&submission.graderId||willCorrect">修改作业</div>
+        <div class="submit-btn active" ng-if="(isSubmit||willSubmit)&&submission.submissionId&&!submission.graderId" ng-click="goAssignmentDetail(2)">修改作业</div>
+        <div class="submit-btn active" ng-if="isPublish&&submission.graderId" ng-click="goAssignmentDetail(3)">查看作业</div>
+        <div class="submit-btn active" ng-if="isPublish&&!submission.graderId" ng-click="goAssignmentDetail(4)">查看作业</div>
+
+        <div class="tips" ng-hide="isBegin||willBegin||isPublish">老师在作业提交阶段也可随时评阅，评阅后<br />学生将无法再修改作业。</div>
+      </div>
+
+    </ion-scroll>
+  </ion-content>
+</ion-view>

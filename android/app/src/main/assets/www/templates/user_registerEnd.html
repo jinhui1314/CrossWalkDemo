@@ -1,0 +1,23 @@
+<ion-view hide-nav-bar="true">
+    <ion-content scroll="false">
+        <div class="goBack">
+            <span class="icon_bar_back backs" ng-click="goTome()"></span>
+            <h1>注册（3/3）</h1>
+            <em class="icon-service register_icon_qq" ng-click="customerService()"></em>
+        </div>
+        <ion-scroll style="width: 100%;height: 90%;">
+            <div class="bindForget_wrap">
+                <form name="form3"  novalidate ng-submit="goRegister()"  >
+                    <div class="formWrap tabulation">
+                        <label class="item-input texts">
+                            <span class="input-label input-sp">密码</span>
+                            <input maxlength="16" type="password" name="password" placeholder="请输入6-16位数字、字母和符号组合" ng-model="$regModel.password" required >
+                            <!--<span class="error" ng-show="form3.password.$error.required" >不可为空</span>-->
+                        </label>
+                    </div>
+                    <button class="next_step" type="submit">完成注册</button>
+                </form>
+            </div>
+        </ion-scroll>
+    </ion-content>
+</ion-view>

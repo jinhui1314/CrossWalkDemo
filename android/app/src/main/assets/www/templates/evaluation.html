@@ -1,0 +1,18 @@
+<ion-view hide-nav-bar="true">
+    <ion-header-bar>
+        <div class="buttons customButtonLeft">
+            <button class="button button-clear" ng-click="closeEvaluation()">取消</button>
+        </div>
+        <h1 class="title" style="font-weight:normal;">评价</h1>
+        <div class="buttons customButton">
+            <button class="button blueBtn" ng-click="sendEvaluation()" ng-if="evaluation.message!=''&&evaluation.message!=undefined">发布</button>
+            <button class="button" ng-if="evaluation.message==''||evaluation.message==undefined">发布</button>
+        </div>
+    </ion-header-bar>
+
+    <ion-content>
+        <div class="newEvaluation">
+            <textarea placeholder="请输入内容" ng-model="evaluation.message" required></textarea>
+        </div>
+    </ion-content>
+</ion-view>
